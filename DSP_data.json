@@ -1,0 +1,2079 @@
+{
+  "recipes": [
+    {
+      "ingredients": [],
+      "output": [{"item": "iron ore","quantity": 3}],
+      "time": 1,
+      "crafting_building_type": "mining machine",
+      "minable": true
+    },
+    {
+      "ingredients": [],
+      "output": [{"item": "copper ore","quantity": 3}],
+      "time": 1,
+      "crafting_building_type": "mining machine",
+      "minable": true
+    },
+    {
+      "ingredients": [],
+      "output": [{"item": "stone","quantity": 3}],
+      "time": 1,
+      "crafting_building_type": "mining machine",
+      "minable": true
+    },
+    {
+      "ingredients": [],
+      "output": [{"item": "coal","quantity": 3}],
+      "time": 1,
+      "crafting_building_type": "mining machine",
+      "minable": true
+    },
+    {
+      "ingredients": [],
+      "output": [{"item": "silicon ore","quantity": 3}],
+      "time": 1,
+      "crafting_building_type": "mining machine",
+      "minable": true
+    },
+    {
+      "ingredients": [],
+      "output": [{"item": "titanium ore","quantity": 3}],
+      "time": 1,
+      "crafting_building_type": "mining machine",
+      "minable": true
+    },
+    {
+      "ingredients": [],
+      "output": [{"item": "water","quantity": 5}],
+      "time": 6,
+      "crafting_building_type": "water pump",
+      "minable": true
+    },
+    {
+      "ingredients": [],
+      "output": [{"item": "crude oil","quantity": 5}],
+      "time": 6,
+      "crafting_building_type": "oil extractor",
+      "minable": true
+    },
+    {
+      "ingredients": [],
+      "output": [{"item": "hydrogen","quantity": 5}],
+      "time": 1,
+      "crafting_building_type": "orbital collector",
+      "minable": true
+    },
+    {
+      "ingredients": [],
+      "output": [{"item": "deuterium","quantity": 1}],
+      "time": 1,
+      "crafting_building_type": "orbital collector",
+      "minable": true
+    },
+    {
+      "ingredients": [{"item": "hydrogen","quantity": 20}],
+      "output": [{"item": "deuterium","quantity": 10}],
+      "time": 5,
+      "crafting_building_type": "miniature particle collider",
+      "minable": false
+    },
+    {
+      "ingredients": [{"item": "critical photon","quantity": 2}],
+      "output": [
+        {"item": "antimatter","quantity": 2},
+        {"item": "hydrogen","quantity": 2}
+      ],
+      "time": 2,
+      "crafting_building_type": "miniature particle collider",
+      "minable": false
+    },
+    {
+      "ingredients": [],
+      "output": [{"item": "core element","quantity": 1}],
+      "time": 1,
+      "crafting_building_type": "battleflield analysis base",
+      "minable": true
+    },
+    {
+      "ingredients": [],
+      "output": [{"item": "critical photon","quantity": 1}],
+      "time": 30,
+      "crafting_building_type": "ray receiver",
+      "minable": true
+    },
+    {
+      "ingredients": [],
+      "output": [{"item": "kimberlite ore","quantity": 3}],
+      "time": 1,
+      "crafting_building_type": "mining machine",
+      "minable": true
+    },
+    {
+      "ingredients": [{"item": "iron ore","quantity": 1}],
+      "output": [{"item": "iron ingot","quantity": 1}],
+      "time": 1,
+      "crafting_building_type": "smelter",
+      "minable": false
+    },
+    {
+      "ingredients": [{"item": "copper ore","quantity": 1}],
+      "output": [{"item": "copper ingot","quantity": 1}],
+      "time": 1,
+      "crafting_building_type": "smelter",
+      "minable": false
+    },
+    {
+      "ingredients": [{"item": "stone","quantity": 1}],
+      "output": [{"item": "stone brick","quantity": 1}],
+      "time": 1,
+      "crafting_building_type": "smelter",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "hydrogen","quantity": 2},
+        {"item": "refined oil","quantity": 1}
+      ],
+      "output": [
+        {"item": "energetic graphite","quantity": 1},
+        {"item": "hydrogen","quantity": 3}
+      ],
+      "time": 4,
+      "crafting_building_type": "oil refinery",
+      "minable": false
+    },
+    {
+      "ingredients": [{"item": "coal","quantity": 2}],
+      "output": [{"item": "energetic graphite","quantity": 1}],
+      "time": 2,
+      "crafting_building_type": "smelter",
+      "minable": false
+    },
+    {
+      "ingredients": [{"item": "silicon ore","quantity": 2}],
+      "output": [{"item": "silicon ingot","quantity": 1}],
+      "time": 2,
+      "crafting_building_type": "smelter",
+      "minable": false
+    },
+    {
+      "ingredients": [{"item": "titanium ore","quantity": 2}],
+      "output": [{"item": "titanium ingot","quantity": 1}],
+      "time": 2,
+      "crafting_building_type": "smelter",
+      "minable": false
+    },
+    {      
+      "ingredients": [
+        {"item": "refined oil", "quantity": 6},
+        {"item": "stone", "quantity": 8},
+        {"item": "water", "quantity": 4}
+      ],
+      "output": [{"item": "sulfuric acid","quantity": 4}],
+      "time": 6,
+      "crafting_building_type": "chemical plant",
+      "minable": false
+    },
+    {      
+      "ingredients": [],
+      "output": [{"item": "sulfuric acid","quantity": 5}],
+      "time": 6,
+      "crafting_building_type": "water pump",
+      "minable": true
+    },
+    {
+      "ingredients": [{"item": "crude oil","quantity": 2}],
+      "output": [
+        {"item": "refined oil","quantity": 2},
+        {"item": "hydrogen","quantity": 1}
+      ],
+      "time": 4,
+      "crafting_building_type": "oil refinery",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "refined oil","quantity": 2},
+        {"item": "coal","quantity": 1},
+        {"item": "hydrogen","quantity": 1}
+      ],
+      "output": [{"item": "refined oil","quantity": 3}],
+      "time": 4,
+      "crafting_building_type": "oil refinery",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "titanium ingot","quantity": 1},
+        {"item": "hydrogen","quantity": 10}
+      ],
+      "output": [{"item": "hydrogen fuel rod","quantity": 2}],
+      "time": 6,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "titanium alloy","quantity": 1},
+        {"item": "deuterium","quantity": 20},
+        {"item": "super magnetic ring","quantity": 1}
+      ],
+      "output": [{"item": "deuteron fuel rod","quantity": 2}],
+      "time": 12,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "antimatter","quantity": 12},
+        {"item": "hydrogen","quantity": 12},
+        {"item": "annihilation constraint sphere","quantity": 1},
+        {"item": "titanium alloy","quantity": 1}
+      ],
+      "output": [{"item": "antimatter fuel rod","quantity": 2}],
+      "time": 24,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "antimatter fuel rod","quantity": 8},
+        {"item": "core element","quantity": 1},
+        {"item": "strange matter","quantity": 2},
+        {"item": "frame material","quantity": 1}
+      ],
+      "output": [{"item": "strange annihilation fuel rod","quantity": 1}],
+      "time": 32,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "copper ingot","quantity": 6},
+        {"item": "circuit board","quantity": 3},
+        {"item": "combustible unit","quantity": 2},
+        {"item": "engine","quantity": 1}
+      ],
+      "output": [{"item": "missile set","quantity": 1}],
+      "time": 2,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [],
+      "output": [{"item": "fractal silicon","quantity": 3}],
+      "time": 1,
+      "crafting_building_type": "mining machine",
+      "minable": true
+    },
+    {
+      "ingredients": [{"item": "iron ore","quantity": 2}],
+      "output": [{"item": "magnet","quantity": 2}],
+      "time": 3,
+      "crafting_building_type": "smelter",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "magnet","quantity": 2},
+        {"item": "copper ingot","quantity": 1}
+      ],
+      "output": [{"item": "magnetic coil","quantity": 2}],
+      "time": 1,
+      "crafting_building_type": "smelter",
+      "minable": false
+    },
+    {
+      "ingredients": [{"item": "stone","quantity": 2}],
+      "output": [{"item": "glass","quantity": 1}],
+      "time": 2,
+      "crafting_building_type": "smelter",
+      "minable": false
+    },
+    {
+      "ingredients": [{"item": "energetic graphite","quantity": 1}],
+      "output": [{"item": "diamond","quantity": 1}],
+      "time": 2,
+      "crafting_building_type": "smelter",
+      "minable": false
+    },
+    {
+      "ingredients": [{"item": "kimberlite ore","quantity": 2}],
+      "output": [{"item": "diamond","quantity": 4}],
+      "time": 3,
+      "crafting_building_type": "smelter",
+      "minable": false
+    },
+    {
+      "ingredients": [{"item": "silicon ingot","quantity": 1}],
+      "output": [{"item": "crystal silicon","quantity": 1}],
+      "time": 2,
+      "crafting_building_type": "smelter",
+      "minable": false
+    },
+    {
+      "ingredients": [{"item": "fractal silicon","quantity": 2}],
+      "output": [{"item": "crystal silicon","quantity": 4}],
+      "time": 3,
+      "crafting_building_type": "smelter",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "titanium ingot","quantity": 4},
+        {"item": "steel","quantity": 4},
+        {"item": "sulfuric acid","quantity": 8}
+      ],
+      "output": [{"item": "titanium alloy","quantity": 4}],
+      "time": 12,
+      "crafting_building_type": "smelter",
+      "minable": false
+    },
+    {
+      "ingredients": [{"item": "coal","quantity": 3}],
+      "output": [{"item": "combustible unit","quantity": 1}],
+      "time": 3,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "refined oil","quantity": 2},
+        {"item": "energetic graphite","quantity": 1}
+      ],
+      "output": [{"item": "plastic","quantity": 1}],
+      "time": 3,
+      "crafting_building_type": "chemical plant",
+      "minable": false
+    },
+    {
+      "ingredients": [],
+      "output": [{"item": "organic crystal","quantity": 3}],
+      "time": 1,
+      "crafting_building_type": "mining machine",
+      "minable": true
+    },
+    {
+      "ingredients": [
+        {"item": "plastic","quantity": 2},
+        {"item": "water","quantity": 1},
+        {"item": "refined oil","quantity": 1}
+      ],
+      "output": [{"item": "organic crystal","quantity": 1}],
+      "time": 6,
+      "crafting_building_type": "chemical plant",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "energetic graphite","quantity": 3},
+        {"item": "sulfuric acid","quantity": 1}
+      ],
+      "output": [{"item": "graphene","quantity": 2}],
+      "time": 3,
+      "crafting_building_type": "chemical plant",
+      "minable": false
+    },
+    {
+      "ingredients": [{"item": "fire ice","quantity": 2}],
+      "output": [
+        {"item": "graphene","quantity": 2},
+        {"item": "hydrogen","quantity": 1}
+      ],
+      "time": 2,
+      "crafting_building_type": "chemical plant",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "particle container","quantity": 1},
+        {"item": "processor","quantity": 1}
+      ],
+      "output": [{"item": "annihilation constraint sphere","quantity": 1}],
+      "time": 20,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [{"item": "copper ingot","quantity": 3}],
+      "output": [{"item": "magnum ammo box","quantity": 1}],
+      "time": 1,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "missile set","quantity": 2},
+        {"item": "processor","quantity": 4},
+        {"item": "explosive unit","quantity": 4},
+        {"item": "thruster","quantity": 2}
+      ],
+      "output": [{"item": "supersonic missile set","quantity": 2}],
+      "time": 4,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [],
+      "output": [{"item": "grating crystal","quantity": 3}],
+      "time": 1,
+      "crafting_building_type": "mining machine",
+      "minable": true
+    },
+    {
+      "ingredients": [{"item": "iron ingot","quantity": 3}],
+      "output": [{"item": "steel","quantity": 1}],
+      "time": 3,
+      "crafting_building_type": "smelter",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "iron ingot","quantity": 2},
+        {"item": "copper ingot","quantity": 1}
+      ],
+      "output": [{"item": "circuit board","quantity": 2}],
+      "time": 1,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [{"item": "glass","quantity": 3}],
+      "output": [{"item": "prism","quantity": 2}],
+      "time": 2,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "iron ingot","quantity": 2},
+        {"item": "gear","quantity": 1},
+        {"item": "magnetic coil","quantity": 1}
+      ],
+      "output": [{"item": "electric motor","quantity": 1}],
+      "time": 2,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "silicon ingot","quantity": 2},
+        {"item": "copper ingot","quantity": 1}
+      ],
+      "output": [{"item": "microcrystalline component","quantity": 1}],
+      "time": 2,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [{"item": "coal","quantity": 2}],
+      "output": [{"item": "proliferatore mkI","quantity": 2}],
+      "time": 1,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "combustible unit","quantity": 2},
+        {"item": "plastic","quantity": 2},
+        {"item": "sulfuric acid","quantity": 1}
+      ],
+      "output": [{"item": "explosive unit","quantity": 2}],
+      "time": 6,
+      "crafting_building_type": "chemical plant",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "particle container","quantity": 2},
+        {"item": "iron ingot","quantity": 2},
+        {"item": "deuterium","quantity": 10}
+      ],
+      "output": [{"item": "strange matter","quantity": 1}],
+      "time": 8,
+      "crafting_building_type": "miniature particle collider",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "organic crystal","quantity": 1},
+        {"item": "titanium ingot","quantity": 3}
+      ],
+      "output": [{"item": "titanium crystal","quantity": 1}],
+      "time": 4,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [{"item": "stalagmite crystal","quantity": 6}],
+      "output": [{"item": "carbon nanotube","quantity": 2}],
+      "time": 4,
+      "crafting_building_type": "chemical plant",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "graphene","quantity": 3},
+        {"item": "titanium ingot","quantity": 1}
+      ],
+      "output": [{"item": "carbon nanotube","quantity": 2}],
+      "time": 4,
+      "crafting_building_type": "chemical plant",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "carbon nanotube","quantity": 2},
+        {"item": "crystal silicon","quantity": 2},
+        {"item": "plastic","quantity": 1}
+      ],
+      "output": [{"item": "particle broadband","quantity": 1}],
+      "time": 8,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "magnum ammo box","quantity": 1},
+        {"item": "titanium ingot","quantity": 2}
+      ],
+      "output": [{"item": "titanium ammo box","quantity": 1}],
+      "time": 2,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "supersonic missile set","quantity": 3},
+        {"item": "crystal explosive unit","quantity": 6},
+        {"item": "strange matter","quantity": 3}
+      ],
+      "output": [{"item": "gravity missile set","quantity": 3}],
+      "time": 6,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [],
+      "output": [{"item": "stalagmite crystal","quantity": 3}],
+      "time": 1,
+      "crafting_building_type": "mining machine",
+      "minable": true
+    },
+    {
+      "ingredients": [{"item": "iron ingot","quantity": 1}],
+      "output": [{"item": "gear","quantity": 1}],
+      "time": 1,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "magnetic coil","quantity": 4},
+        {"item": "prism","quantity": 2}
+      ],
+      "output": [{"item": "plasma exciter","quantity": 1}],
+      "time": 2,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "prism","quantity": 2},
+        {"item": "circuit board","quantity": 1}
+      ],
+      "output": [{"item": "photon combiner","quantity": 1}],
+      "time": 3,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "grating crystal","quantity": 1},
+        {"item": "circuit board","quantity": 1}
+      ],
+      "output": [{"item": "photon combiner","quantity": 1}],
+      "time": 3,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "electric motor","quantity": 2},
+        {"item": "magnetic coil","quantity": 2}
+      ],
+      "output": [{"item": "electromagnetic turbine","quantity": 1}],
+      "time": 2,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "circuit board","quantity": 2},
+        {"item": "microcrystalline component","quantity": 2}
+      ],
+      "output": [{"item": "processor","quantity": 1}],
+      "time": 3,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "proliferatore mkI","quantity": 2},
+        {"item": "diamond","quantity": 1}
+      ],
+      "output": [{"item": "proliferatore mkII","quantity": 1}],
+      "time": 1,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "explosive unit","quantity": 8},
+        {"item": "casimir crystal","quantity": 1},
+        {"item": "crystal silicon","quantity": 8}
+      ],
+      "output": [{"item": "crystal explosive unit","quantity": 8}],
+      "time": 24,
+      "crafting_building_type": "chemical plant",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "grating crystal","quantity": 8},
+        {"item": "graphene","quantity": 2},
+        {"item": "hydrogen","quantity": 12}
+      ],
+      "output": [{"item": "casimir crystal","quantity": 1}],
+      "time": 4,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "titanium crystal","quantity": 1},
+        {"item": "graphene","quantity": 2},
+        {"item": "hydrogen","quantity": 12}
+      ],
+      "output": [{"item": "casimir crystal","quantity": 1}],
+      "time": 4,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "glass","quantity": 2},
+        {"item": "titanium ingot","quantity": 2},
+        {"item": "water","quantity": 2}
+      ],
+      "output": [{"item": "titanium glass","quantity": 2}],
+      "time": 5,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "casimir crystal","quantity": 1},
+        {"item": "titanium glass","quantity": 2}
+      ],
+      "output": [{"item": "plane filter","quantity": 1}],
+      "time": 12,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "processor","quantity": 2},
+        {"item": "plane filter","quantity": 2}
+      ],
+      "output": [{"item": "quantum chip","quantity": 1}],
+      "time": 6,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "titanium alloy","quantity": 1},
+        {"item": "titanium ammo box","quantity": 1}
+      ],
+      "output": [{"item": "superalloy ammo box","quantity": 1}],
+      "time": 3,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "copper ingot","quantity": 18},
+        {"item": "combustible unit","quantity": 4}
+      ],
+      "output": [{"item": "shell set","quantity": 2}],
+      "time": 3,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [],
+      "output": [{"item": "unipolar magnet","quantity": 3}],
+      "time": 1,
+      "crafting_building_type": "mining machine",
+      "minable": true
+    },
+    {
+      "ingredients": [
+        {"item": "magnetic coil","quantity": 1},
+        {"item": "copper ingot","quantity": 2}
+      ],
+      "output": [{"item": "engine","quantity": 1}],
+      "time": 3,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "steel","quantity": 2},
+        {"item": "copper ingot","quantity": 3}
+      ],
+      "output": [{"item": "thruster","quantity": 1}],
+      "time": 4,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "titanium alloy","quantity": 5},
+        {"item": "electromagnetic turbine","quantity": 5}
+      ],
+      "output": [{"item": "reinforced thruster","quantity": 1}],
+      "time": 6,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "electromagnetic turbine","quantity": 2},
+        {"item": "magnet","quantity": 3},
+        {"item": "energetic graphite","quantity": 1}
+      ],
+      "output": [{"item": "super magnetic ring","quantity": 1}],
+      "time": 3,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "electromagnetic turbine","quantity": 2},
+        {"item": "copper ingot","quantity": 2},
+        {"item": "graphene","quantity": 2}
+      ],
+      "output": [{"item": "particle container","quantity": 1}],
+      "time": 4,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "electromagnetic turbine","quantity": 10},
+        {"item": "copper ingot","quantity": 2}
+      ],
+      "output": [{"item": "particle container","quantity": 1}],
+      "time": 4,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "proliferatore mkII","quantity": 2},
+        {"item": "carbon nanotube","quantity": 1}
+      ],
+      "output": [{"item": "proliferatore mkIII","quantity": 1}],
+      "time": 2,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "iron ingot","quantity": 3},
+        {"item": "engine","quantity": 1},
+        {"item": "circuit board","quantity": 2},
+        {"item": "plasma exciter","quantity": 1}
+      ],
+      "output": [{"item": "prototype","quantity": 1}],
+      "time": 2,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "prototype","quantity": 1},
+        {"item": "electromagnetic turbine","quantity": 1},
+        {"item": "circuit board","quantity": 2},
+        {"item": "photon combiner","quantity": 2}
+      ],
+      "output": [{"item": "precision drone","quantity": 1}],
+      "time": 4,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "prototype","quantity": 1},
+        {"item": "electromagnetic turbine","quantity": 1},
+        {"item": "processor","quantity": 1},
+        {"item": "particle container","quantity": 1}
+      ],
+      "output": [{"item": "attack drone","quantity": 1}],
+      "time": 4,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "titanium alloy","quantity": 5},
+        {"item": "reinforced thruster","quantity": 1},
+        {"item": "processor","quantity": 2},
+        {"item": "particle container","quantity": 3}
+      ],
+      "output": [{"item": "corvette","quantity": 1}],
+      "time": 5,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "frame material","quantity": 20},
+        {"item": "reinforced thruster","quantity": 4},
+        {"item": "processor","quantity": 4},
+        {"item": "strange matter","quantity": 1}
+      ],
+      "output": [{"item": "destroyer","quantity": 1}],
+      "time": 8,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "graphene","quantity": 1},
+        {"item": "magnet","quantity": 2},
+        {"item": "deuterium","quantity": 10}
+      ],
+      "output": [{"item": "plasma capsule","quantity": 1}],
+      "time": 2,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "shell set","quantity": 1},
+        {"item": "titanium ingot","quantity": 6},
+        {"item": "explosive unit","quantity": 2}
+      ],
+      "output": [{"item": "high explosive shell set","quantity": 1}],
+      "time": 3,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [],
+      "output": [{"item": "fire ice","quantity": 3}],
+      "time": 1,
+      "crafting_building_type": "mining machine",
+      "minable": true
+    },
+    {
+      "ingredients": [
+        {"item": "iron ingot","quantity": 2},
+        {"item": "engine","quantity": 1},
+        {"item": "processor","quantity": 1}
+      ],
+      "output": [{"item": "logistics bot","quantity": 1}],
+      "time": 2,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "iron ingot","quantity": 5},
+        {"item": "processor","quantity": 2},
+        {"item": "thruster","quantity": 2}
+      ],
+      "output": [{"item": "logistics drone","quantity": 1}],
+      "time": 4,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "titanium alloy","quantity": 10},
+        {"item": "processor","quantity": 10},
+        {"item": "reinforced thruster","quantity": 2}
+      ],
+      "output": [{"item": "interstellar logistics vessel","quantity": 1}],
+      "time": 6,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [{"item": "graviton lens","quantity": 1}],
+      "output": [{"item": "space warper","quantity": 1}],
+      "time": 10,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [{"item": "gravity matrix","quantity": 1}],
+      "output": [{"item": "space warper","quantity": 8}],
+      "time": 10,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "diamond","quantity": 4},
+        {"item": "strange matter","quantity": 1}
+      ],
+      "output": [{"item": "graviton lens","quantity": 1}],
+      "time": 6,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "stone brick","quantity": 3},
+        {"item": "steel","quantity": 1}
+      ],
+      "output": [{"item": "foundation","quantity": 1}],
+      "time": 1,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "graphene","quantity": 1},
+        {"item": "photon combiner","quantity": 1}
+      ],
+      "output": [{"item": "solar sail","quantity": 2}],
+      "time": 4,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "carbon nanotube","quantity": 4},
+        {"item": "titanium alloy","quantity": 1},
+        {"item": "silicon ingot","quantity": 1}
+      ],
+      "output": [{"item": "frame material","quantity": 1}],
+      "time": 6,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "frame material","quantity": 3},
+        {"item": "solar sail","quantity": 3},
+        {"item": "processor","quantity": 3}
+      ],
+      "output": [{"item": "dyson sphere component","quantity": 1}],
+      "time": 8,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "dyson sphere component","quantity": 2},
+        {"item": "deuteron fuel rod","quantity": 4},
+        {"item": "quantum chip","quantity": 2}
+      ],
+      "output": [{"item": "small carrier rocket","quantity": 1}],
+      "time": 6,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "plasma capsule","quantity": 1},
+        {"item": "particle container","quantity": 1},
+        {"item": "hydrogen","quantity": 10},
+        {"item": "antimatter","quantity": 10}
+      ],
+      "output": [{"item": "antimatter capsule","quantity": 1}],
+      "time": 2,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "high explosive shell set","quantity": 1},
+        {"item": "titanium alloy","quantity": 3},
+        {"item": "crystal explosive unit","quantity": 2}
+      ],
+      "output": [{"item": "crystal shell set","quantity": 1}],
+      "time": 6,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [],
+      "output": [{"item": "log","quantity": 1}],
+      "time": 1,
+      "crafting_building_type": "battleflield analysis base",
+      "minable": true
+    },
+    {
+      "ingredients": [
+        {"item": "magnetic coil","quantity": 1},
+        {"item": "circuit board","quantity": 1}
+      ],
+      "output": [{"item": "electromagnetic matrix","quantity": 1}],
+      "time": 3,
+      "crafting_building_type": "matrix lab",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "energetic graphite","quantity": 2},
+        {"item": "hydrogen","quantity": 2}
+      ],
+      "output": [{"item": "energy matrix","quantity": 1}],
+      "time": 6,
+      "crafting_building_type": "matrix lab",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "diamond","quantity": 1},
+        {"item": "titanium crystal","quantity": 1}
+      ],
+      "output": [{"item": "structure matrix","quantity": 1}],
+      "time": 8,
+      "crafting_building_type": "matrix lab",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "processor","quantity": 2},
+        {"item": "particle broadband","quantity": 1}
+      ],
+      "output": [{"item": "information matrix","quantity": 1}],
+      "time": 10,
+      "crafting_building_type": "matrix lab",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "graviton lens","quantity": 1},
+        {"item": "quantum chip","quantity": 1}
+      ],
+      "output": [{"item": "gravity matrix","quantity": 2}],
+      "time": 24,
+      "crafting_building_type": "matrix lab",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "electromagnetic matrix","quantity": 1},
+        {"item": "energy matrix","quantity": 1},
+        {"item": "structure matrix","quantity": 1},
+        {"item": "information matrix","quantity": 1},
+        {"item": "gravity matrix","quantity": 1},
+        {"item": "antimatter","quantity": 1}
+      ],
+      "output": [{"item": "universe matrix","quantity": 1}],
+      "time": 15,
+      "crafting_building_type": "matrix lab",
+      "minable": false
+    },
+    {
+      "ingredients": [],
+      "output": [{"item": "dark fog matrix","quantity": 1}],
+      "time": 1,
+      "crafting_building_type": "battleflield analysis base",
+      "minable": true
+    },
+    {
+      "ingredients": [],
+      "output": [{"item": "energy shard","quantity": 1}],
+      "time": 1,
+      "crafting_building_type": "battleflield analysis base",
+      "minable": true
+    },
+    {
+      "ingredients": [],
+      "output": [{"item": "silicon based neuron","quantity": 1}],
+      "time": 1,
+      "crafting_building_type": "battleflield analysis base",
+      "minable": true
+    },
+    {
+      "ingredients": [],
+      "output": [{"item": "negentropy singularity","quantity": 1}],
+      "time": 1,
+      "crafting_building_type": "battleflield analysis base",
+      "minable": true
+    },
+    {
+      "ingredients": [],
+      "output": [{"item": "matter recombinator","quantity": 1}],
+      "time": 1,
+      "crafting_building_type": "battleflield analysis base",
+      "minable": true
+    },
+    {
+      "ingredients": [
+        {"item": "electromagnetic turbine","quantity": 1},
+        {"item": "plasma exciter","quantity": 1},
+        {"item": "hydrogen","quantity": 3}
+      ],
+      "output": [{"item": "jamming capsule","quantity": 1}],
+      "time": 2,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "jamming capsule","quantity": 2},
+        {"item": "super magnetic ring","quantity": 1},
+        {"item": "titanium glass","quantity": 2}
+      ],
+      "output": [{"item": "suppressing capsule","quantity": 2}],
+      "time": 8,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [],
+      "output": [{"item": "plant fuel","quantity": 1}],
+      "time": 1,
+      "crafting_building_type": "battleflield analysis base",
+      "minable": true
+    },
+    {
+      "ingredients": [
+        {"item": "iron ingot","quantity": 2},
+        {"item": "magnetic coil","quantity": 1}
+      ],
+      "output": [{"item": "tesla tower","quantity": 1}],
+      "time": 1,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "tesla tower","quantity": 1},
+        {"item": "plasma exciter","quantity": 3}
+      ],
+      "output": [{"item": "wireless power tower","quantity": 1}],
+      "time": 3,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "frame material","quantity": 2},
+        {"item": "super magnetic ring","quantity": 10},
+        {"item": "wireless power tower","quantity": 1}
+      ],
+      "output": [{"item": "satellite substation","quantity": 1}],
+      "time": 5,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "iron ingot","quantity": 6},
+        {"item": "gear","quantity": 1},
+        {"item": "magnetic coil","quantity": 3}
+      ],
+      "output": [{"item": "wind turbine","quantity": 1}],
+      "time": 4,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "iron ingot","quantity": 10},
+        {"item": "stone brick","quantity": 4},
+        {"item": "gear","quantity": 4},
+        {"item": "magnetic coil","quantity": 4}
+      ],
+      "output": [{"item": "thermal power plant","quantity": 1}],
+      "time": 5,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "copper ingot","quantity": 10},
+        {"item": "silicon ingot","quantity": 10},
+        {"item": "circuit board","quantity": 5}
+      ],
+      "output": [{"item": "solar panel","quantity": 1}],
+      "time": 6,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "steel","quantity": 15},
+        {"item": "copper ingot","quantity": 22},
+        {"item": "photon combiner","quantity": 4},
+        {"item": "super magnetic ring","quantity": 1}
+      ],
+      "output": [{"item": "geothermal power station","quantity": 1}],
+      "time": 6,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "titanium alloy","quantity": 12},
+        {"item": "super magnetic ring","quantity": 10},
+        {"item": "carbon nanotube","quantity": 8},
+        {"item": "processor","quantity": 4}
+      ],
+      "output": [{"item": "mini fusion power plant","quantity": 1}],
+      "time": 10,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "titanium alloy","quantity": 40},
+        {"item": "steel","quantity": 40},
+        {"item": "processor","quantity": 40},
+        {"item": "particle container","quantity": 8}
+      ],
+      "output": [{"item": "energy exchanger","quantity": 1}],
+      "time": 15,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "iron ingot","quantity": 6},
+        {"item": "super magnetic ring","quantity": 1},
+        {"item": "crystal silicon","quantity": 3}
+      ],
+      "output": [{"item": "accumulator","quantity": 1}],
+      "time": 3,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "steel","quantity": 20},
+        {"item": "silicon ingot","quantity": 20},
+        {"item": "photon combiner","quantity": 10},
+        {"item": "processor","quantity": 5},
+        {"item": "super magnetic ring","quantity": 20}
+      ],
+      "output": [{"item": "ray receiver","quantity": 1}],
+      "time": 8,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "titanium alloy","quantity": 20},
+        {"item": "frame material","quantity": 20},
+        {"item": "annihilation constraint sphere","quantity": 10},
+        {"item": "quantum chip","quantity": 10}
+      ],
+      "output": [{"item": "artificial star","quantity": 1}],
+      "time": 30,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "iron ingot","quantity": 2},
+        {"item": "gear","quantity": 1}
+      ],
+      "output": [{"item": "conveyor belt mkI","quantity": 3}],
+      "time": 1,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "conveyor belt mkI","quantity": 2},
+        {"item": "electromagnetic turbine","quantity": 1}
+      ],
+      "output": [{"item": "conveyor belt mkII","quantity": 3}],
+      "time": 1,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "conveyor belt mkII","quantity": 2},
+        {"item": "super magnetic ring","quantity": 1},
+        {"item": "graphene","quantity": 1}
+      ],
+      "output": [{"item": "conveyor belt mkIII","quantity": 3}],
+      "time": 1,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "iron ingot","quantity": 3},
+        {"item": "gear","quantity": 2},
+        {"item": "circuit board","quantity": 1}
+      ],
+      "output": [{"item": "splitter","quantity": 1}],
+      "time": 2,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "steel","quantity": 3},
+        {"item": "gear","quantity": 4},
+        {"item": "super magnetic ring","quantity": 1},
+        {"item": "processor","quantity": 2}
+      ],
+      "output": [{"item": "automatic piler","quantity": 1}],
+      "time": 4,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "iron ingot","quantity": 3},
+        {"item": "gear","quantity": 2},
+        {"item": "glass","quantity": 1},
+        {"item": "circuit board","quantity": 2}
+      ],
+      "output": [{"item": "traffic monitor","quantity": 1}],
+      "time": 2,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "steel","quantity": 4},
+        {"item": "plasma exciter","quantity": 2},
+        {"item": "circuit board","quantity": 2},
+        {"item": "microcrystalline component","quantity": 2}
+      ],
+      "output": [{"item": "spray coater","quantity": 1}],
+      "time": 3,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "iron ingot","quantity": 4},
+        {"item": "stone brick","quantity": 4}
+      ],
+      "output": [{"item": "depot mkI","quantity": 1}],
+      "time": 2,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "steel","quantity": 8},
+        {"item": "stone brick","quantity": 8}
+      ],
+      "output": [{"item": "depot mkII","quantity": 1}],
+      "time": 4,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "iron ingot","quantity": 8},
+        {"item": "stone brick","quantity": 4},
+        {"item": "glass","quantity": 4}
+      ],
+      "output": [{"item": "storage tank","quantity": 1}],
+      "time": 2,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "iron ingot","quantity": 8},
+        {"item": "plasma exciter","quantity": 4},
+        {"item": "processor","quantity": 4}
+      ],
+      "output": [{"item": "logistic distributor","quantity": 1}],
+      "time": 8,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "steel","quantity": 40},
+        {"item": "titanium ingot","quantity": 40},
+        {"item": "processor","quantity": 40},
+        {"item": "particle container","quantity": 20}
+      ],
+      "output": [{"item": "planetary logistics station","quantity": 1}],
+      "time": 20,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "planetary logistics station","quantity": 1},
+        {"item": "titanium alloy","quantity": 40},
+        {"item": "particle container","quantity": 20}
+      ],
+      "output": [{"item": "interstellar logistics station","quantity": 1}],
+      "time": 30,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "interstellar logistics station","quantity": 2},
+        {"item": "super magnetic ring","quantity": 50},
+        {"item": "reinforced thruster","quantity": 20},
+        {"item": "accumulator","quantity": 20}
+      ],
+      "output": [{"item": "","quantity": 1}],
+      "time": 30,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "iron ingot","quantity": 1},
+        {"item": "circuit board","quantity": 1}
+      ],
+      "output": [{"item": "sorter mkI","quantity": 1}],
+      "time": 1,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "sorter mkI","quantity": 2},
+        {"item": "motor","quantity": 1}
+      ],
+      "output": [{"item": "sorter mkII","quantity": 2}],
+      "time": 1,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "sorter mkII","quantity": 2},
+        {"item": "electromagnetic turbine","quantity": 1}
+      ],
+      "output": [{"item": "sorter mkIII","quantity": 2}],
+      "time": 1,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "sorter mkIII","quantity": 2},
+        {"item": "super magnetic ring","quantity": 1},
+        {"item": "processor","quantity": 1}
+      ],
+      "output": [{"item": "pile sorter","quantity": 1}],
+      "time": 1,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "iron ingot","quantity": 4},
+        {"item": "circuit board","quantity": 2},
+        {"item": "magnetic coil","quantity": 2},
+        {"item": "gear","quantity": 2}
+      ],
+      "output": [{"item": "mining machine","quantity": 1}],
+      "time": 3,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "titanium alloy","quantity": 20},
+        {"item": "frame material","quantity": 10},
+        {"item": "super magnetic ring","quantity": 10},
+        {"item": "quantum chip","quantity": 4},
+        {"item": "grating crystal","quantity": 40}
+      ],
+      "output": [{"item": "advanced mining machine","quantity": 1}],
+      "time": 20,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "iron ingot","quantity": 8},
+        {"item": "stone brick","quantity": 4},
+        {"item": "motor","quantity": 4},
+        {"item": "circuit board","quantity": 2}
+      ],
+      "output": [{"item": "water pump","quantity": 1}],
+      "time": 4,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "steel","quantity": 12},
+        {"item": "stone brick","quantity": 12},
+        {"item": "circuit board","quantity": 6},
+        {"item": "plasma exciter","quantity": 4}
+      ],
+      "output": [{"item": "oil extractor","quantity": 1}],
+      "time": 8,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "steel","quantity": 10},
+        {"item": "stone brick","quantity": 10},
+        {"item": "circuit board","quantity": 6},
+        {"item": "plasma exciter","quantity": 6}
+      ],
+      "output": [{"item": "oil refinery","quantity": 1}],
+      "time": 6,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "steel","quantity": 8},
+        {"item": "stone brick","quantity": 4},
+        {"item": "glass","quantity": 4},
+        {"item": "processor","quantity": 1}
+      ],
+      "output": [{"item": "fractionator","quantity": 1}],
+      "time": 3,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "steel","quantity": 8},
+        {"item": "stone brick","quantity": 8},
+        {"item": "glass","quantity": 8},
+        {"item": "circuit board","quantity": 2}
+      ],
+      "output": [{"item": "chemical plant","quantity": 1}],
+      "time": 5,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "chemical plant","quantity": 1},
+        {"item": "titanium glass","quantity": 10},
+        {"item": "strange matter","quantity": 3},
+        {"item": "quantum chip","quantity": 3}
+      ],
+      "output": [{"item": "quantum chemical plant","quantity": 1}],
+      "time": 10,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "titanium alloy","quantity": 20},
+        {"item": "frame material","quantity": 20},
+        {"item": "super magnetic ring","quantity": 25},
+        {"item": "graphene","quantity": 10},
+        {"item": "processor","quantity": 8}
+      ],
+      "output": [{"item": "miniature particle collider","quantity": 1}],
+      "time": 15,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "iron ingot","quantity": 4},
+        {"item": "stone brick","quantity": 2},
+        {"item": "circuit board","quantity": 4},
+        {"item": "magnetic coil","quantity": 2}
+      ],
+      "output": [{"item": "arc smelter","quantity": 1}],
+      "time": 3,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "arc smelter","quantity": 1},
+        {"item": "frame material","quantity": 5},
+        {"item": "plane filter","quantity": 4},
+        {"item": "unipolar magnet","quantity": 15}
+      ],
+      "output": [{"item": "plane smelter","quantity": 1}],
+      "time": 5,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "plane smelter","quantity": 1},
+        {"item": "negentropy singularity","quantity": 10},
+        {"item": "energy shard","quantity": 30},
+        {"item": "quantum chip","quantity": 4}
+      ],
+      "output": [{"item": "negentropy smelter","quantity": 1}],
+      "time": 6,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "iron ingot","quantity": 4},
+        {"item": "gear","quantity": 8},
+        {"item": "circuit board","quantity": 4}
+      ],
+      "output": [{"item": "assembling machine mkI","quantity": 1}],
+      "time": 2,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "assembling machine mkI","quantity": 1},
+        {"item": "graphene","quantity": 8},
+        {"item": "processor","quantity": 4}
+      ],
+      "output": [{"item": "assembling machine mkII","quantity": 1}],
+      "time": 3,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "assembling machine mkII","quantity": 1},
+        {"item": "particle broadband","quantity": 8},
+        {"item": "quantum chip","quantity": 2}
+      ],
+      "output": [{"item": "assembling machine mkIII","quantity": 1}],
+      "time": 4,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "assembling machine mkIII","quantity": 1},
+        {"item": "matter recombinator","quantity": 10},
+        {"item": "energy shard","quantity": 30},
+        {"item": "quantum chip","quantity": 4}
+      ],
+      "output": [{"item": "recomposing assembler","quantity": 1}],
+      "time": 1,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "iron ingot","quantity": 8},
+        {"item": "glass","quantity": 4},
+        {"item": "circuit board","quantity": 4},
+        {"item": "magnetic coil","quantity": 4}
+      ],
+      "output": [{"item": "matrix lab","quantity": 1}],
+      "time": 3,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "matrix lab","quantity": 1},
+        {"item": "silicon based neuron","quantity": 10},
+        {"item": "dark fog matrix","quantity": 20},
+        {"item": "quantum chip","quantity": 4}
+      ],
+      "output": [{"item": "self evolving lab","quantity": 1}],
+      "time": 4,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "iron ingot","quantity": 3},
+        {"item": "prism","quantity": 4},
+        {"item": "plasma exciter","quantity": 2},
+        {"item": "circuit board","quantity": 12}
+      ],
+      "output": [{"item": "holo beacon","quantity": 1}],
+      "time": 4,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "steel","quantity": 20},
+        {"item": "gear","quantity": 20},
+        {"item": "processor","quantity": 5},
+        {"item": "super magnetic ring","quantity": 10}
+      ],
+      "output": [{"item": "emrail ejector","quantity": 1}],
+      "time": 6,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "titanium alloy","quantity": 80},
+        {"item": "frame material","quantity": 30},
+        {"item": "graviton lens","quantity": 20},
+        {"item": "quantum chip","quantity": 10}
+      ],
+      "output": [{"item": "vertical launching silo","quantity": 1}],
+      "time": 30,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "iron ingot","quantity": 8},
+        {"item": "gear","quantity": 8},
+        {"item": "circuit board","quantity": 2},
+        {"item": "magnetic coil","quantity": 4}
+      ],
+      "output": [{"item": "gauss turret","quantity": 1}],
+      "time": 4,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "steel","quantity": 8},
+        {"item": "motor","quantity": 6},
+        {"item": "circuit board","quantity": 12},
+        {"item": "engine","quantity": 6}
+      ],
+      "output": [{"item": "missile turret","quantity": 1}],
+      "time": 6,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "steel","quantity": 10},
+        {"item": "motor","quantity": 8},
+        {"item": "circuit board","quantity": 10},
+        {"item": "super magnetic ring","quantity": 1}
+      ],
+      "output": [{"item": "implosion cannon","quantity": 1}],
+      "time": 5,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "steel","quantity": 9},
+        {"item": "plasma exciter","quantity": 6},
+        {"item": "circuit board","quantity": 6},
+        {"item": "photon combiner","quantity": 9}
+      ],
+      "output": [{"item": "laser turret","quantity": 1}],
+      "time": 6,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "titanium alloy","quantity": 20},
+        {"item": "titanium glass","quantity": 10},
+        {"item": "super magnetic ring","quantity": 10},
+        {"item": "plasma exciter","quantity": 5},
+        {"item": "processor","quantity": 5}
+      ],
+      "output": [{"item": "plasma turret","quantity": 1}],
+      "time": 10,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "steel","quantity": 2},
+        {"item": "super magnetic ring","quantity": 2},
+        {"item": "plasma exciter","quantity": 2},
+        {"item": "processor","quantity": 1}
+      ],
+      "output": [{"item": "sr plasma turret","quantity": 1}],
+      "time": 8,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "steel","quantity": 12},
+        {"item": "circuit board","quantity": 18},
+        {"item": "microcrystalline","quantity": 6},
+        {"item": "engine","quantity": 12}
+      ],
+      "output": [{"item": "battleflield analysis base","quantity": 1}],
+      "time": 6,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "copper ingot","quantity": 12},
+        {"item": "plasma exciter","quantity": 9},
+        {"item": "diamond","quantity": 6},
+        {"item": "processor","quantity": 3}
+      ],
+      "output": [{"item": "jammer tower","quantity": 1}],
+      "time": 5,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "wireless power tower","quantity": 2},
+        {"item": "steel","quantity": 12},
+        {"item": "crystal silicon","quantity": 6}
+      ],
+      "output": [{"item": "signal tower","quantity": 1}],
+      "time": 6,
+      "crafting_building_type": "assembler",
+      "minable": false
+    },
+    {
+      "ingredients": [
+        {"item": "steel","quantity": 20},
+        {"item": "electromagnetic turbine","quantity": 20},
+        {"item": "super magnetic ring","quantity": 5},
+        {"item": "particle container","quantity": 5}
+      ],
+      "output": [{"item": "planetary shield generator","quantity": 1}],
+      "time": 10,
+      "crafting_building_type": "assembler",
+      "minable": false
+    }
+  ],
+  "items icons" : [
+    {"refined oil":"icons/25px-Icon_Refined_Oil.png"},
+    {"sulfuric acid":"icons/25px-Icon_Sulfuric_Acid.png"},
+    {"water":"icons/25px-Icon_Water.png"},
+    {"wind turbine":"icons/25px-Icon_Wind_Turbine.png"},
+    {"crude oil":"icons/27px-Icon_Crude_Oil.png"},
+    {"organic crystal":"icons/30px-Icon_Organic_Crystal.png"},
+    {"planetary logistics station":"icons/31px-Icon_Planetary_Logistics_Station.png"},
+    {"accumulator":"icons/33px-Icon_Accumulator.png"},
+    {"oil extractor":"icons/34px-Icon_Oil_Extractor.png"},
+    {"fractionator":"icons/35px-Icon_Fractionator.png"},
+    {"grating crystal":"icons/37px-Icon_Grating_Crystal.png"},
+    {"holo beacon":"icons/38px-Icon_Holo_Beacon.png"},
+    {"interstellar logistics station":"icons/38px-Icon_Interstellar_Logistics_Station.png"},
+    {"titanium crystal":"icons/38px-Icon_Titanium_Crystal.png"},
+    {"energetic graphite":"icons/39px-Icon_Energetic_Graphite.png"},
+    {"iron ore":"icons/42px-Icon_Iron_Ore.png"},
+    {"orbital collector":"icons/42px-Icon_Orbital_Collector.png"},
+    {"splitter":"icons/42px-Icon_Splitter.png"},
+    {"assembling machine mkII":"icons/43px-Icon_Assembling_Machine_Mk.II.png"},
+    {"assembling machine mkI":"icons/43px-Icon_Assembling_Machine_Mk.I.png"},
+    {"antimatter fuel rod":"icons/44px-Icon_Antimatter_Fuel_Rod.png"},
+    {"deuteron fuel rod":"icons/44px-Icon_Deuteron_Fuel_Rod.png"},
+    {"fractal silicon":"icons/44px-Icon_Fractal_Silicon.png"},
+    {"hydrogen fuel rod":"icons/44px-Icon_Hydrogen_Fuel_Rod.png"},
+    {"kimberlite ore":"icons/44px-Icon_Kimberlite_Ore.png"},
+    {"logistics vessel":"icons/44px-Icon_Logistics_Vessel.png"},
+    {"oil refinery":"icons/44px-Icon_Oil_Refinery.png"},
+    {"silicon ore":"icons/44px-Icon_Silicon_Ore.png"},
+    {"titanium glass":"icons/44px-Icon_Titanium_Glass.png"},
+    {"titanium ore":"icons/44px-Icon_Titanium_Ore.png"},
+    {"advanced mining machine":"icons/45px-Icon_Advanced_Mining_Machine.png"},
+    {"annihilation constraint sphere":"icons/45px-Icon_Annihilation_Constraint_Sphere.png"},
+    {"antimatter capsule":"icons/45px-Icon_Antimatter_Capsule.png"},
+    {"antimatter":"icons/45px-Icon_Antimatter.png"},
+    {"arc smelter":"icons/45px-Icon_Arc_Smelter.png"},
+    {"artificial star":"icons/45px-Icon_Artificial_Star.png"},
+    {"assembling machine mkIII":"icons/45px-Icon_Assembling_Machine_Mk.III.png"},
+    {"attack drone":"icons/45px-Icon_Attack_Drone.png"},
+    {"automatic piler":"icons/45px-Icon_Automatic_Piler.png"},
+    {"battleflield analysis base":"icons/45px-Icon_Battlefield_Analysis_Base.png"},
+    {"carbon nanotube":"icons/45px-Icon_Carbon_Nanotube.png"},
+    {"casimir crystal":"icons/45px-Icon_Casimir_Crystal.png"},
+    {"chemical plant":"icons/45px-Icon_Chemical_Plant.png"},
+    {"circuit board":"icons/45px-Icon_Circuit_Board.png"},
+    {"coal":"icons/45px-Icon_Coal.png"},
+    {"combustible unit":"icons/45px-Icon_Combustible_Unit.png"},
+    {"conveyor belt mkIII":"icons/45px-Icon_Conveyor_Belt_Mk.III.png"},
+    {"conveyor belt mkII":"icons/45px-Icon_Conveyor_Belt_Mk.II.png"},
+    {"conveyor belt mkI":"icons/45px-Icon_Conveyor_Belt_Mk.I.png"},
+    {"copper ingot":"icons/45px-Icon_Copper_Ingot.png"},
+    {"copper ore":"icons/45px-Icon_Copper_Ore.png"},
+    {"core element":"icons/45px-Icon_Core_Element.png"},
+    {"corvette":"icons/45px-Icon_Corvette.png"},
+    {"critical photon":"icons/45px-Icon_Critical_Photon.png"},
+    {"crystal explosive unit":"icons/45px-Icon_Crystal_Explosive_Unit.png"},
+    {"crystal shell":"icons/45px-Icon_Crystal_Shell_Set.png"},
+    {"crystal silicon":"icons/45px-Icon_Crystal_Silicon.png"},
+    {"dark fog matrix":"icons/45px-Icon_Dark_Fog_Matrix.png"},
+    {"destroyer":"icons/45px-Icon_Destroyer.png"},
+    {"deuterium":"icons/45px-Icon_Deuterium.png"},
+    {"diamond":"icons/45px-Icon_Diamond.png"},
+    {"dyson sphere component":"icons/45px-Icon_Dyson_Sphere_Component.png"},
+    {"motor":"icons/45px-Icon_Electric_Motor.png"},
+    {"electromagnetic matrix":"icons/45px-Icon_Electromagnetic_Matrix.png"},
+    {"electromagnetic turbine":"icons/45px-Icon_Electromagnetic_Turbine.png"},
+    {"emrail ejector":"icons/45px-Icon_EM-Rail_Ejector.png"},
+    {"energy exchanger":"icons/45px-Icon_Energy_Exchanger.png"},
+    {"energy matrix":"icons/45px-Icon_Energy_Matrix.png"},
+    {"energy shard":"icons/45px-Icon_Energy_Shard.png"},
+    {"engine":"icons/45px-Icon_Engine.png"},
+    {"explosive unit":"icons/45px-Icon_Explosive_Unit.png"},
+    {"fire ice":"icons/45px-Icon_Fire_Ice.png"},
+    {"foundation":"icons/45px-Icon_Foundation.png"},
+    {"frame material":"icons/45px-Icon_Frame_Material.png"},
+    {"full accumulator":"icons/45px-Icon_Full_Accumulator.png"},
+    {"gauss turret":"icons/45px-Icon_Gauss_Turret.png"},
+    {"gear":"icons/45px-Icon_Gear.png"},
+    {"geothermal power station":"icons/45px-Icon_Geothermal_Power_Station.png"},
+    {"glass":"icons/45px-Icon_Glass.png"},
+    {"graphene":"icons/45px-Icon_Graphene.png"},
+    {"graviton lens":"icons/45px-Icon_Graviton_Lens.png"},
+    {"gravity matrix":"icons/45px-Icon_Gravity_Matrix.png"},
+    {"gravity missile set":"icons/45px-Icon_Gravity_Missile_Set.png"},
+    {"high explosive shell set":"icons/45px-Icon_High-Explosive_Shell_Set.png"},
+    {"silicon ingot":"icons/45px-Icon_High-Purity_Silicon.png"},
+    {"hydrogen":"icons/45px-Icon_Hydrogen.png"},
+    {"implosion cannon":"icons/45px-Icon_Implosion_Cannon.png"},
+    {"information matrix":"icons/45px-Icon_Information_Matrix.png"},
+    {"iron ingot":"icons/45px-Icon_Iron_Ingot.png"},
+    {"jammer tower":"icons/45px-Icon_Jammer_Tower.png"},
+    {"jamming capsule":"icons/45px-Icon_Jamming_Capsule.png"},
+    {"laser turret":"icons/45px-Icon_Laser_Turret.png"},
+    {"logistics bot":"icons/45px-Icon_Logistics_Bot.png"},
+    {"logistic distributor":"icons/45px-Icon_Logistics_Distributor.png"},
+    {"logistics drone":"icons/45px-Icon_Logistics_Drone.png"},
+    {"log":"icons/45px-Icon_Log.png"},
+    {"magnetic coil":"icons/45px-Icon_Magnetic_Coil.png"},
+    {"magnet":"icons/45px-Icon_Magnet.png"},
+    {"magnum ammo box":"icons/45px-Icon_Magnum_Ammo_Box.png"},
+    {"matrix lab":"icons/45px-Icon_Matrix_Lab.png"},
+    {"matter recombinator":"icons/45px-Icon_Matter_Recombinator.png"},
+    {"microcrystalline component":"icons/45px-Icon_Microcrystalline_Component.png"},
+    {"miniature particle collider":"icons/45px-Icon_Miniature_Particle_Collider.png"},
+    {"mini fusion power plant":"icons/45px-Icon_Mini_Fusion_Power_Plant.png"},
+    {"mining machine":"icons/45px-Icon_Mining_Machine.png"},
+    {"missile set":"icons/45px-Icon_Missile_Set.png"},
+    {"missile turret":"icons/45px-Icon_Missile_Turret.png"},
+    {"negentropy singularity":"icons/45px-Icon_Negentropy_Singularity.png"},
+    {"negentropy smelter":"icons/45px-Icon_Negentropy_Smelter.png"},
+    {"particle broadband":"icons/45px-Icon_Particle_Broadband.png"},
+    {"particle container":"icons/45px-Icon_Particle_Container.png"},
+    {"photon combiner":"icons/45px-Icon_Photon_Combiner.png"},
+    {"pile sorter":"icons/45px-Icon_Pile_Sorter.png"},
+    {"plane filter":"icons/45px-Icon_Plane_Filter.png"},
+    {"plane smelter":"icons/45px-Icon_Plane_Smelter.png"},
+    {"planetary shield generator":"icons/45px-Icon_Planetary_Shield_Generator.png"},
+    {"plant fuel":"icons/45px-Icon_Plant_Fuel.png"},
+    {"plasma capsule":"icons/45px-Icon_Plasma_Capsule.png"},
+    {"plasma exciter":"icons/45px-Icon_Plasma_Exciter.png"},
+    {"plasma turret":"icons/45px-Icon_Plasma_Turret.png"},
+    {"plastic":"icons/45px-Icon_Plastic.png"},
+    {"precision drone":"icons/45px-Icon_Precision_Drone.png"},
+    {"prism":"icons/45px-Icon_Prism.png"},
+    {"processor":"icons/45px-Icon_Processor.png"},
+    {"proliferatore mkIII":"icons/45px-Icon_Proliferator_Mk.III.png"},
+    {"proliferatore mkII":"icons/45px-Icon_Proliferator_Mk.II.png"},
+    {"proliferatore mkI":"icons/45px-Icon_Proliferator_Mk.I.png"},
+    {"prototype":"icons/45px-Icon_Prototype.png"},
+    {"quantum chemical plant":"icons/45px-Icon_Quantum_Chemical_Plant.png"},
+    {"quantum chip":"icons/45px-Icon_Quantum_Chip.png"},
+    {"ray receiver":"icons/45px-Icon_Ray_Receiver.png"},
+    {"recomposing assembler":"icons/45px-Icon_Re-composing_Assembler.png"},
+    {"reinforced thruster":"icons/45px-Icon_Reinforced_Thruster.png"},
+    {"satellite substation":"icons/45px-Icon_Satellite_Substation.png"},
+    {"self evolving lab":"icons/45px-Icon_Self-evolution_Lab.png"},
+    {"shell set":"icons/45px-Icon_Shell_Set.png"},
+    {"signal tower":"icons/45px-Icon_Signal_Tower.png"},
+    {"silicon based neuron":"icons/45px-Icon_Silicon-based_Neuron.png"},
+    {"small carrier rocket":"icons/45px-Icon_Small_Carrier_Rocket.png"},
+    {"solar panel":"icons/45px-Icon_Solar_Panel.png"},
+    {"solar sail":"icons/45px-Icon_Solar_Sail.png"},
+    {"sorter mkIII":"icons/45px-Icon_Sorter_Mk.III.png"},
+    {"sorter mkII":"icons/45px-Icon_Sorter_Mk.II.png"},
+    {"sorter mkI":"icons/45px-Icon_Sorter_Mk.I.png"},
+    {"space warper":"icons/45px-Icon_Space_Warper.png"},
+    {"stalagmite crystal":"icons/45px-Icon_Spiniform_Stalagmite_Crystal.png"},
+    {"spray coater":"icons/45px-Icon_Spray_Coater.png"},
+    {"plasma turret":"icons/45px-Icon_SR_Plasma_Turret.png"},
+    {"steel":"icons/45px-Icon_Steel.png"},
+    {"stone brick":"icons/45px-Icon_Stone_Brick.png"},
+    {"stone":"icons/45px-Icon_Stone.png"},
+    {"storage mkII":"icons/45px-Icon_Storage_Mk.II.png"},
+    {"storage mkI":"icons/45px-Icon_Storage_Mk.I.png"},
+    {"storage tank":"icons/45px-Icon_Storage_Tank.png"},
+    {"strange annihilation fuel rod":"icons/45px-Icon_Strange_Annihilation_Fuel_Rod.png"},
+    {"strange matter":"icons/45px-Icon_Strange_Matter.png"},
+    {"structure matrix":"icons/45px-Icon_Structure_Matrix.png"},
+    {"superalloy ammo box":"icons/45px-Icon_Superalloy_Ammo_Box.png"},
+    {"super magnetic ring":"icons/45px-Icon_Super-Magnetic_Ring.png"},
+    {"supersonic missile set":"icons/45px-Icon_Supersonic_Missile_Set.png"},
+    {"suppressing capsule":"icons/45px-Icon_Suppressing_Capsule.png"},
+    {"tesla tower":"icons/45px-Icon_Tesla_Tower.png"},
+    {"thermal power plant":"icons/45px-Icon_Thermal_Power_Plant.png"},
+    {"thruster":"icons/45px-Icon_Thruster.png"},
+    {"titanium alloy":"icons/45px-Icon_Titanium_Alloy.png"},
+    {"titanium ammo box":"icons/45px-Icon_Titanium_Ammo_Box.png"},
+    {"titanium ingot":"icons/45px-Icon_Titanium_Ingot.png"},
+    {"traffic monitor":"icons/45px-Icon_Traffic_Monitor.png"},
+    {"unipolar magnet":"icons/45px-Icon_Unipolar_Magnet.png"},
+    {"universe matrix":"icons/45px-Icon_Universe_Matrix.png"},
+    {"vertical launching silo":"icons/45px-Icon_Vertical_Launching_Silo.png"},
+    {"water pump":"icons/45px-Icon_Water_Pump.png"},
+    {"wireless power tower":"icons/45px-Icon_Wireless_Power_Tower.png"}
+  ],
+  "factory buildings": {
+    "assembler": [
+      {"tier": 1, "name": "assembling machine mkI","production_speed_factor": 0.75,"energy_consumption": 270},
+      {"tier": 2, "name": "assembling machine mkII","production_speed_factor": 1,"energy_consumption": 540},
+      {"tier": 3, "name": "assembling machine mkIII","production_speed_factor": 1.5,"energy_consumption": 1080},
+      {"tier": 4, "name": "recomposing assembler","production_speed_factor": 3,"energy_consumption": 2700}
+    ],
+    "smelter": [
+      {"tier": 1, "name": "arc smelter","production_speed_factor": 1,"energy_consumption": 360},
+      {"tier": 2, "name": "plane smelter","production_speed_factor": 2,"energy_consumption": 1440},
+      {"tier": 3, "name": "negentropy smelter","production_speed_factor": 3,"energy_consumption": 2880}
+    ],
+    "mining machine": [
+      {"tier": 1, "name": "mining machine","production_speed_factor": 1,"energy_consumption": 420},
+      {"tier": 2, "name": "advanced mining machine","production_speed_factor": 2,"energy_consumption": 2940}
+    ],
+    "water pump": [
+        {"tier": 1, "name": "water pump","production_speed_factor": 1,"energy_consumption": 300}
+    ],
+    "oil extractor": [
+        {"tier": 1, "name": "oil extractor","production_speed_factor": 1,"energy_consumption": 840}
+    ],
+    "orbital collector": [
+        {"tier": 1, "name": "orbital collector","production_speed_factor": 1,"energy_consumption": 0}
+    ],
+    "ray receiver": [
+        {"tier": 1, "name": "ray receiver","production_speed_factor": 1,"energy_consumption": 0}
+    ],
+    "battleflield analysis base": [
+        {"tier": 1, "name": "battleflield analysis base","production_speed_factor": 1,"energy_consumption": 2400}
+    ],
+    "chemical plant": [
+        {"tier": 1, "name": "chemical plant","production_speed_factor": 1,"energy_consumption": 720},
+        {"tier": 2, "name": "quantum chemical plant","production_speed_factor": 2,"energy_consumption": 2160}
+    ],
+    "oil refinery": [
+        {"tier": 1, "name": "oil refinery","production_speed_factor": 1,"energy_consumption": 960}
+    ],
+    "miniature particle collider": [
+        {"tier": 1, "name": "miniature particle collider","production_speed_factor": 1,"energy_consumption": 12000}
+    ],
+    "fractionator": [
+        {"tier": 1, "name": "miniature particle collider","production_speed_factor": 1,"energy_consumption": 720}
+    ],
+    "matrix lab": [
+        {"tier": 1, "name": "matrix lab","production_speed_factor": 1,"energy_consumption": 480},
+        {"tier": 2, "name": "self evolving lab","production_speed_factor": 3,"energy_consumption": 1920}
+    ]
+  }
+}

@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>DSP Production Planner</title>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body,#root{width:100%;height:100%;overflow:hidden}
+body{background:#0f172a;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#e2e8f0;-webkit-font-smoothing:antialiased}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#1f2937;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#374151}
+select option{background:#111827;color:#e2e8f0}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect, useRef, useMemo, useCallback } = React;
+
+/* ═══════════════════════════════════════════════════════════════
+   SHARED STYLES
+═══════════════════════════════════════════════════════════════ */
+const S = {
+  inputBase: {
+    width:'100%', background:'#0d1117', border:'1px solid #1f2937',
+    borderRadius:8, color:'#e2e8f0', padding:'7px 10px', fontSize:13, outline:'none',
+  },
+  label: { display:'block', fontSize:10.5, color:'#4b5563', marginBottom:4, fontWeight:600 },
+  select: {
+    width:'100%', background:'#0d1117', border:'1px solid #1f2937',
+    borderRadius:7, color:'#d1d5db', padding:'5px 8px', fontSize:11, outline:'none', cursor:'pointer',
+  },
+  headerBtn: {
+    background:'#0d1117', border:'1px solid #1f2937', color:'#6b7280',
+    padding:'5px 9px', borderRadius:7, cursor:'pointer', fontSize:14,
+  },
+  centeredPage: {
+    width:'100%', height:'100%', display:'flex', flexDirection:'column',
+    alignItems:'center', justifyContent:'center',
+    background:'radial-gradient(ellipse at 50% 40%, #0a1628 0%, #050810 100%)',
+  },
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   DATA UTILITIES
+═══════════════════════════════════════════════════════════════ */
+function normalizeData(raw) {
+  const itemIconMap = {};
+  for (const entry of (raw['items icons'] || [])) {
+    for (const [name, path] of Object.entries(entry)) {
+      itemIconMap[name.toLowerCase().trim()] = path;
+    }
+  }
+
+  const buildingTiers = {};
+  for (const [btype, tiers] of Object.entries(raw['factory buildings'] || {})) {
+    buildingTiers[btype.toLowerCase().trim()] = tiers.map(t => ({
+      tier: t.tier ?? 1,
+      name: t.name ?? btype,
+      speed: t.production_speed_factor ?? 1,
+      energy: t.energy_consumption ?? 0,
+    }));
+  }
+
+  const recipes = (raw['recipes'] || []).map((r, idx) => ({
+    id: idx,
+    ingredients: (r.ingredients || []).map(i => ({
+      item: i.item.toLowerCase().trim(), qty: Number(i.quantity) || 0,
+    })),
+    outputs: (r.output || []).map(o => ({
+      item: o.item.toLowerCase().trim(), qty: Number(o.quantity) || 0,
+    })),
+    time: Number(r.time) || 1,
+    buildingType: ((r.crafting_building_type || r.building_type || '')).toLowerCase().trim(),
+    minable: !!r.minable,
+  }));
+
+  const itemRecipesMap = {};
+  for (const recipe of recipes) {
+    for (const out of recipe.outputs) {
+      if (!out.item) continue;
+      if (!itemRecipesMap[out.item]) itemRecipesMap[out.item] = [];
+      if (!itemRecipesMap[out.item].find(r => r.id === recipe.id))
+        itemRecipesMap[out.item].push(recipe);
+    }
+  }
+
+  return { recipes, itemIconMap, buildingTiers, itemRecipesMap };
+}
+
+function getAllProducibleItems(map) {
+  return Object.keys(map).filter(i => i && i.trim()).sort();
+}
+
+function computeProductionChain(targetItem, targetRate, itemRecipesMap, buildingTiers, recipeChoices, tierChoices) {
+  const nodes = {};
+  const edges = [];
+  const rawResources = {};
+  const resolving = new Set();
+
+  function getChosenRecipeAndTier(item, itemRecipes) {
+    const chosenId = recipeChoices[item];
+    const recipe = itemRecipes.find(r => r.id === chosenId) || itemRecipes[0];
+    const tiers = buildingTiers[recipe.buildingType] || [{ tier:1, name:recipe.buildingType, speed:1, energy:0 }];
+    const tierIdx = Math.min(tierChoices[item] ?? 0, tiers.length - 1);
+    return { recipe, tier: tiers[tierIdx], tierIdx, allTiers: tiers };
+  }
+
+  function traverse(item, neededRate, depth) {
+    const availableRecipes = itemRecipesMap[item] || [];
+
+    // True raw — no recipe at all
+    if (availableRecipes.length === 0) {
+      rawResources[item] = (rawResources[item] || 0) + neededRate;
+      if (!nodes[item]) nodes[item] = { rate:0, buildingCount:null, recipe:null, tier:null, depth, isRaw:true };
+      nodes[item].rate += neededRate;
+      return;
+    }
+
+    const { recipe, tier, tierIdx, allTiers } = getChosenRecipeAndTier(item, availableRecipes);
+
+    // Minable = raw
+    if (recipe.minable) {
+      rawResources[item] = (rawResources[item] || 0) + neededRate;
+      if (!nodes[item]) nodes[item] = { rate:0, buildingCount:null, recipe, tier:null, depth, isRaw:true };
+      nodes[item].rate += neededRate;
+      return;
+    }
+
+    const outEntry = recipe.outputs.find(o => o.item === item);
+    if (!outEntry) return;
+
+    // Rate per building per minute
+    const ratePerBldg = (outEntry.qty / recipe.time) * 60 * tier.speed;
+    const buildingCount = ratePerBldg > 0 ? neededRate / ratePerBldg : 0;
+
+    // Already visited (cycle or shared dep) — just accumulate
+    if (resolving.has(item)) {
+      if (nodes[item]) { nodes[item].rate += neededRate; nodes[item].buildingCount += buildingCount; }
+      return;
+    }
+
+    if (nodes[item]) {
+      nodes[item].rate += neededRate;
+      nodes[item].buildingCount += buildingCount;
+    } else {
+      nodes[item] = { rate: neededRate, buildingCount, recipe, tier, tierIdx, allTiers, depth, isRaw:false };
+    }
+
+    // cycles per minute this item needs
+    const cyclesPerMin = neededRate / (outEntry.qty * tier.speed * (60 / recipe.time));
+
+    resolving.add(item);
+    for (const ing of recipe.ingredients) {
+      const ingRate = ing.qty * cyclesPerMin;
+      const existing = edges.find(e => e.from === ing.item && e.to === item && !e.isByProduct);
+      if (existing) existing.rate += ingRate;
+      else edges.push({ from: ing.item, to: item, rate: ingRate });
+      traverse(ing.item, ingRate, depth + 1);
+    }
+    // By-products
+    for (const out of recipe.outputs) {
+      if (out.item === item) continue;
+      const byRate = out.qty * cyclesPerMin;
+      if (!nodes[out.item]) nodes[out.item] = { rate:byRate, buildingCount:null, recipe:null, tier:null, depth:depth-1, isRaw:false, isByProduct:true };
+      else nodes[out.item].rate += byRate;
+      nodes[out.item].isByProduct = true;
+      edges.push({ from:item, to:out.item, rate:byRate, isByProduct:true });
+    }
+    resolving.delete(item);
+  }
+
+  traverse(targetItem, targetRate, 0);
+
+  // BFS depth assignment
+  const depths = { [targetItem]:0 };
+  const incoming = {};
+  for (const e of edges) {
+    if (!e.isByProduct) {
+      if (!incoming[e.to]) incoming[e.to] = [];
+      if (!incoming[e.to].includes(e.from)) incoming[e.to].push(e.from);
+    }
+  }
+  const q = [targetItem];
+  while (q.length) {
+    const cur = q.shift();
+    for (const src of (incoming[cur] || [])) {
+      if (depths[src] === undefined) { depths[src] = depths[cur]+1; q.push(src); }
+    }
+  }
+  for (const [item, d] of Object.entries(depths)) {
+    if (nodes[item]) nodes[item].depth = d;
+  }
+
+  return { nodes, edges, rawResources };
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   GRAPH
+═══════════════════════════════════════════════════════════════ */
+const NW = 190, NH = 78, HGAP = 270, VGAP = 96;
+
+function computeLayout(nodes) {
+  const real = Object.entries(nodes).filter(([,n]) => !n.isByProduct);
+  if (!real.length) return {};
+  const byDepth = {};
+  for (const [item,n] of real) {
+    const d = n.depth ?? 0;
+    if (!byDepth[d]) byDepth[d] = [];
+    byDepth[d].push(item);
+  }
+  const maxD = Math.max(...Object.keys(byDepth).map(Number));
+  const pos = {};
+  for (const [ds, items] of Object.entries(byDepth)) {
+    const d = Number(ds);
+    const x = (maxD - d) * HGAP + 50;
+    const total = items.length * VGAP;
+    items.forEach((item, i) => { pos[item] = { x, y: -total/2 + VGAP/2 + i*VGAP }; });
+  }
+  return pos;
+}
+
+function ProductionGraph({ nodes, edges, itemIconMap, selectedItem, onNodeClick }) {
+  const svgRef   = useRef(null);
+  const gRef     = useRef(null);
+  const tf       = useRef({ x:80, y:0, k:1 });
+  const panning  = useRef(false);
+  const panStart = useRef(null);
+  const dragging = useRef(null);
+  const nodePos  = useRef({});
+  const fitted   = useRef(false);
+  const [tick, setTick] = useState(0);
+  const redraw = () => setTick(t => t+1);
+
+  // Reset positions when node set changes
+  const nodeKeys = Object.keys(nodes).filter(k => !nodes[k].isByProduct).sort().join(',');
+  useEffect(() => {
+    const layout = computeLayout(nodes);
+    for (const [item, p] of Object.entries(layout)) {
+      if (!nodePos.current[item]) nodePos.current[item] = { ...p };
+    }
+    for (const item of Object.keys(nodePos.current)) {
+      if (!layout[item]) delete nodePos.current[item];
+    }
+    fitted.current = false;
+    redraw();
+  }, [nodeKeys]);
+
+  // Auto-fit
+  useEffect(() => {
+    if (fitted.current) return;
+    const pos = nodePos.current;
+    const svg = svgRef.current;
+    if (!svg || !Object.keys(pos).length) return;
+    const rect = svg.getBoundingClientRect();
+    if (!rect.width) return;
+    const xs = Object.values(pos).map(p => p.x);
+    const ys = Object.values(pos).map(p => p.y);
+    const minX = Math.min(...xs), maxX = Math.max(...xs)+NW;
+    const minY = Math.min(...ys), maxY = Math.max(...ys)+NH;
+    const cw = maxX-minX, ch = maxY-minY;
+    if (!cw||!ch) return;
+    const k = Math.min((rect.width*0.87)/cw, (rect.height*0.87)/ch, 1.5);
+    tf.current = {
+      x: rect.width/2 - (minX+cw/2)*k,
+      y: rect.height/2 - (minY+ch/2)*k,
+      k,
+    };
+    fitted.current = true;
+    applyTf();
+  });
+
+  function applyTf() {
+    const g = gRef.current;
+    if (!g) return;
+    const {x,y,k} = tf.current;
+    g.setAttribute('transform', `translate(${x},${y}) scale(${k})`);
+  }
+
+  // Wheel
+  useEffect(() => {
+    const svg = svgRef.current;
+    if (!svg) return;
+    const fn = e => {
+      e.preventDefault();
+      const rect = svg.getBoundingClientRect();
+      const mx = e.clientX-rect.left, my = e.clientY-rect.top;
+      const t = tf.current;
+      const f = e.deltaY < 0 ? 1.12 : 0.89;
+      const k = Math.max(0.06, Math.min(6, t.k*f));
+      const r = k/t.k;
+      tf.current = { x: mx-r*(mx-t.x), y: my-r*(my-t.y), k };
+      applyTf();
+    };
+    svg.addEventListener('wheel', fn, { passive:false });
+    return () => svg.removeEventListener('wheel', fn);
+  }, []);
+
+  // Mouse move/up
+  useEffect(() => {
+    const onMove = e => {
+      if (dragging.current) {
+        const { item, ox, oy, mx, my } = dragging.current;
+        const k = tf.current.k;
+        nodePos.current[item] = { x: ox+(e.clientX-mx)/k, y: oy+(e.clientY-my)/k };
+        redraw();
+        return;
+      }
+      if (!panning.current || !panStart.current) return;
+      tf.current = { ...tf.current, x: e.clientX-panStart.current.dx, y: e.clientY-panStart.current.dy };
+      applyTf();
+    };
+    const onUp = () => { panning.current=false; panStart.current=null; dragging.current=null; };
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+    return () => { window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp); };
+  }, []);
+
+  const startPan = e => {
+    if (e.button!==0) return;
+    panning.current = true;
+    panStart.current = { dx: e.clientX-tf.current.x, dy: e.clientY-tf.current.y };
+  };
+
+  const startDrag = (e, item) => {
+    e.stopPropagation();
+    const p = nodePos.current[item] || {x:0,y:0};
+    dragging.current = { item, ox:p.x, oy:p.y, mx:e.clientX, my:e.clientY };
+  };
+
+  const resetView = () => {
+    nodePos.current = {}; fitted.current = false;
+    tf.current = {x:80,y:0,k:1}; redraw();
+  };
+
+  const zoomBtn = delta => {
+    const svg = svgRef.current; if (!svg) return;
+    const r = svg.getBoundingClientRect();
+    const cx = r.width/2, cy = r.height/2;
+    const t = tf.current;
+    const k = Math.max(0.06, Math.min(6, t.k*delta));
+    const ratio = k/t.k;
+    tf.current = { x: cx-ratio*(cx-t.x), y: cy-ratio*(cy-t.y), k };
+    applyTf();
+  };
+
+  const pos = nodePos.current;
+
+  // Build edge SVG data
+  const edgeSVG = [];
+  const seenE = new Set();
+  for (const edge of edges) {
+    if (edge.isByProduct) continue;
+    const key = `${edge.from}→${edge.to}`;
+    if (seenE.has(key)) continue;
+    seenE.add(key);
+    const fp = pos[edge.from], tp = pos[edge.to];
+    if (!fp||!tp) continue;
+    const x1=fp.x+NW, y1=fp.y+NH/2, x2=tp.x, y2=tp.y+NH/2;
+    const cx=(x1+x2)/2;
+    edgeSVG.push({ key, x1,y1,x2,y2,cx, rate:edge.rate, lx:cx, ly:(y1+y2)/2 });
+  }
+
+  const realNodes = Object.entries(nodes).filter(([,n])=>!n.isByProduct);
+
+  return (
+    <div style={{position:'relative',width:'100%',height:'100%'}}>
+      <svg ref={svgRef}
+        style={{width:'100%',height:'100%',display:'block',cursor:dragging.current?'grabbing':'grab'}}
+        onMouseDown={startPan}>
+        <defs>
+          <marker id="arr" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
+            <path d="M0,1 L8,4 L0,7 z" fill="#3b82f6" opacity="0.75"/>
+          </marker>
+          <filter id="glow" x="-25%" y="-25%" width="150%" height="150%">
+            <feGaussianBlur stdDeviation="3.5" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <radialGradient id="bg" cx="50%" cy="45%" r="75%">
+            <stop offset="0%" stopColor="#0b1628"/>
+            <stop offset="100%" stopColor="#050810"/>
+          </radialGradient>
+          <pattern id="dots" width="32" height="32" patternUnits="userSpaceOnUse">
+            <circle cx="16" cy="16" r="0.8" fill="#1a2235"/>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#bg)"/>
+        <rect width="100%" height="100%" fill="url(#dots)"/>
+
+        <g ref={gRef}>
+          {/* Edges */}
+          <g>
+            {edgeSVG.map(e => (
+              <g key={e.key}>
+                <path
+                  d={`M${e.x1},${e.y1} C${e.cx},${e.y1} ${e.cx},${e.y2} ${e.x2},${e.y2}`}
+                  stroke="#3b82f6" strokeWidth="1.6" fill="none" opacity="0.4" markerEnd="url(#arr)"
+                />
+                <text x={e.lx} y={e.ly-7} textAnchor="middle" fill="#374151" fontSize="9.5" fontFamily="system-ui">
+                  {e.rate.toFixed(1)}/m
+                </text>
+              </g>
+            ))}
+          </g>
+
+          {/* Nodes */}
+          <g>
+            {realNodes.map(([item, n]) => {
+              const p = pos[item];
+              if (!p) return null;
+              const isSel = item === selectedItem;
+              const isRaw = n.isRaw;
+              const bcount = n.buildingCount ?? 0;
+              const isBotl = !isRaw && bcount > 10;
+              const icon = itemIconMap[item];
+              const dname = item.length > 21 ? item.slice(0,19)+'…' : item;
+              const dispName = dname.charAt(0).toUpperCase() + dname.slice(1);
+
+              const bg    = isSel ? '#0c2040' : isRaw ? '#091a09' : '#0d1117';
+              const stroke= isSel ? '#3b82f6' : isRaw ? '#15803d' : isBotl ? '#b45309' : '#1f2937';
+              const sw    = isSel || isRaw ? 1.8 : 1;
+              const accentCol = isSel?'#1d4ed8': isRaw?'#15803d': isBotl?'#b45309':'#1e3a5f';
+
+              return (
+                <g key={item}
+                  transform={`translate(${p.x},${p.y})`}
+                  style={{cursor:'pointer'}}
+                  onMouseDown={e => startDrag(e,item)}
+                  onClick={e => { e.stopPropagation(); onNodeClick?.(item); }}>
+                  {/* Drop shadow */}
+                  <rect width={NW} height={NH} rx="10" fill="rgba(0,0,0,0.45)" transform="translate(2,3)"/>
+                  {/* Body */}
+                  <rect width={NW} height={NH} rx="10" fill={bg} stroke={stroke} strokeWidth={sw}
+                    filter={isSel?'url(#glow)':undefined}/>
+                  {/* Accent top bar */}
+                  <rect width={NW} height="3" rx="1.5" fill={accentCol}/>
+
+                  {/* Icon */}
+                  {icon && (
+                    <image href={icon} x="10" y="13" width="28" height="28"
+                      preserveAspectRatio="xMidYMid meet"
+                      onError={e => e.target.setAttribute('display','none')}/>
+                  )}
+
+                  {/* Name */}
+                  <text x={icon?46:12} y="28"
+                    fill={isSel?'#bfdbfe':'#e2e8f0'} fontSize="11.5" fontWeight="700"
+                    fontFamily="system-ui,sans-serif">
+                    {dispName}
+                  </text>
+                  {/* Rate */}
+                  <text x={icon?46:12} y="43"
+                    fill="#4b5563" fontSize="10" fontFamily="system-ui,sans-serif">
+                    {n.rate.toFixed(2)}/min
+                  </text>
+                  {/* Building count */}
+                  {!isRaw && bcount > 0 && (
+                    <text x={icon?46:12} y="57"
+                      fill={isBotl?'#d97706':'#374151'} fontSize="10"
+                      fontFamily="system-ui,sans-serif">
+                      ×{Math.ceil(bcount)} {(n.tier?.name ?? n.recipe?.buildingType ?? '').slice(0,18)}
+                    </text>
+                  )}
+                  {/* RAW badge */}
+                  {isRaw && (
+                    <text x={NW-8} y="62" textAnchor="end"
+                      fill="#16a34a" fontSize="8.5" fontWeight="800"
+                      fontFamily="system-ui,sans-serif" letterSpacing="0.06em">
+                      RAW
+                    </text>
+                  )}
+                  {/* Bottleneck badge */}
+                  {isBotl && (
+                    <text x={NW-8} y="20" textAnchor="end"
+                      fill="#f59e0b" fontSize="11" fontFamily="system-ui,sans-serif">
+                      ⚠
+                    </text>
+                  )}
+                </g>
+              );
+            })}
+          </g>
+        </g>
+      </svg>
+
+      {/* Zoom controls */}
+      <div style={{position:'absolute',bottom:14,right:14,display:'flex',gap:6}}>
+        {[['⟳',resetView],['＋',()=>zoomBtn(1.2)],['－',()=>zoomBtn(0.83)]].map(([lbl,fn])=>(
+          <button key={lbl} onClick={fn} style={{
+            background:'rgba(13,17,23,0.92)',border:'1px solid #1f2937',color:'#6b7280',
+            padding:'5px 12px',borderRadius:7,cursor:'pointer',fontSize:13,
+            backdropFilter:'blur(4px)',
+          }}>{lbl}</button>
+        ))}
+      </div>
+
+      {/* Legend */}
+      <div style={{position:'absolute',bottom:14,left:14,display:'flex',gap:12,alignItems:'center',
+        background:'rgba(13,17,23,0.7)',padding:'4px 10px',borderRadius:7,backdropFilter:'blur(4px)'}}>
+        {[['#3b82f6','Selected'],['#15803d','Raw Resource'],['#d97706','Bottleneck >10 bldgs']].map(([c,l])=>(
+          <div key={l} style={{display:'flex',alignItems:'center',gap:4}}>
+            <div style={{width:8,height:8,borderRadius:2,background:c}}/>
+            <span style={{fontSize:10,color:'#4b5563'}}>{l}</span>
+          </div>
+        ))}
+        <span style={{fontSize:10,color:'#374151',marginLeft:4}}>Drag nodes · Scroll to zoom · Drag canvas to pan</span>
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SIDEBAR COMPONENTS
+═══════════════════════════════════════════════════════════════ */
+function cap(s){ return s ? s.charAt(0).toUpperCase()+s.slice(1) : ''; }
+
+function ItemIcon({ name, iconMap, size=22 }) {
+  const src = iconMap?.[name];
+  const [err,setErr] = useState(false);
+  if (!src||err) return <div style={{width:size,height:size,background:'#1f2937',borderRadius:4,flexShrink:0}}/>;
+  return <img src={src} alt={name} width={size} height={size}
+    style={{objectFit:'contain',flexShrink:0,borderRadius:3}}
+    onError={()=>setErr(true)}/>;
+}
+
+function Collapsible({ title, children, defaultOpen=true }) {
+  const [open,setOpen] = useState(defaultOpen);
+  return (
+    <div style={{borderBottom:'1px solid #0d1117'}}>
+      <button onClick={()=>setOpen(o=>!o)} style={{
+        width:'100%',padding:'9px 14px',display:'flex',alignItems:'center',
+        justifyContent:'space-between',background:'transparent',border:'none',
+        color:'#4b5563',fontSize:10,fontWeight:700,textTransform:'uppercase',
+        letterSpacing:'0.09em',cursor:'pointer',
+      }}>
+        <span>{title}</span>
+        <span style={{fontSize:11,color:'#1f2937',fontWeight:400}}>{open?'▾':'▸'}</span>
+      </button>
+      {open && <div style={{padding:'0 14px 12px'}}>{children}</div>}
+    </div>
+  );
+}
+
+function ItemSearch({ allItems, selectedItem, onSelect, itemIconMap }) {
+  const [query,setQuery] = useState('');
+  const [open,setOpen]   = useState(false);
+  const ref = useRef(null);
+
+  const filtered = useMemo(() => {
+    const q = query.toLowerCase();
+    return q ? allItems.filter(i=>i.includes(q)) : allItems;
+  }, [allItems,query]);
+
+  useEffect(()=>{
+    const fn = e => { if (ref.current&&!ref.current.contains(e.target)) setOpen(false); };
+    document.addEventListener('mousedown',fn);
+    return ()=>document.removeEventListener('mousedown',fn);
+  },[]);
+
+  return (
+    <div ref={ref} style={{position:'relative'}}>
+      <div onClick={()=>setOpen(o=>!o)} style={{
+        ...S.inputBase,display:'flex',alignItems:'center',gap:8,cursor:'pointer',userSelect:'none',
+      }}>
+        {selectedItem && <ItemIcon name={selectedItem} iconMap={itemIconMap} size={18}/>}
+        <span style={{flex:1,color:selectedItem?'#e2e8f0':'#4b5563',fontSize:13}}>
+          {selectedItem ? cap(selectedItem) : 'Select target item…'}
+        </span>
+        <span style={{color:'#374151',fontSize:10}}>{open?'▴':'▾'}</span>
+      </div>
+
+      {open && (
+        <div style={{
+          position:'absolute',top:'calc(100% + 4px)',left:0,right:0,zIndex:9999,
+          background:'#0d1117',border:'1px solid #1f2937',borderRadius:9,
+          boxShadow:'0 16px 48px rgba(0,0,0,0.8)',overflow:'hidden',
+        }}>
+          <div style={{padding:6}}>
+            <input autoFocus placeholder="Search…" value={query}
+              onChange={e=>setQuery(e.target.value)}
+              onClick={e=>e.stopPropagation()}
+              style={{...S.inputBase,fontSize:12}}/>
+          </div>
+          <div style={{maxHeight:260,overflowY:'auto'}}>
+            {filtered.length===0 && <div style={{padding:'8px 14px',fontSize:12,color:'#374151'}}>No results</div>}
+            {filtered.map(item=>(
+              <div key={item}
+                onClick={()=>{onSelect(item);setOpen(false);setQuery('');}}
+                style={{
+                  display:'flex',alignItems:'center',gap:8,padding:'7px 12px',
+                  cursor:'pointer',fontSize:12.5,color:'#e2e8f0',
+                  background:item===selectedItem?'#0c2040':'transparent',
+                }}
+                onMouseEnter={e=>{if(item!==selectedItem)e.currentTarget.style.background='#111827';}}
+                onMouseLeave={e=>{if(item!==selectedItem)e.currentTarget.style.background='transparent';}}>
+                <ItemIcon name={item} iconMap={itemIconMap} size={18}/>
+                {cap(item)}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function RecipeCard({ item, nodeData, recipes, buildingTiers, recipeChoices, tierChoices, itemIconMap, onSetRecipe, onSetTier }) {
+  if (!recipes||!recipes.length) return null;
+  const chosenId = recipeChoices[item] ?? recipes[0].id;
+  const recipe   = recipes.find(r=>r.id===chosenId) || recipes[0];
+  const tiers    = buildingTiers[recipe.buildingType] || [{tier:1,name:recipe.buildingType,speed:1,energy:0}];
+  const tIdx     = Math.min(tierChoices[item]??0, tiers.length-1);
+  const tier     = tiers[tIdx];
+  const bcount   = nodeData.buildingCount ?? 0;
+  const isBotl   = bcount > 10;
+
+  const recipeLabel = r => {
+    const out = r.outputs.map(o=>`${o.qty}×${cap(o.item)}`).join('+');
+    const inList = r.ingredients.slice(0,2).map(i=>cap(i.item)).join(', ')+(r.ingredients.length>2?'…':'');
+    return r.ingredients.length ? `${out} ← ${inList}` : out;
+  };
+
+  return (
+    <div style={{
+      background:'#080d16',borderRadius:9,padding:'9px 10px',marginBottom:6,
+      border:`1px solid ${isBotl?'#78350f':'#111827'}`,
+    }}>
+      <div style={{display:'flex',alignItems:'center',gap:7,marginBottom:7}}>
+        <ItemIcon name={item} iconMap={itemIconMap} size={18}/>
+        <span style={{color:'#e2e8f0',fontWeight:700,fontSize:12,flex:1}}>{cap(item)}</span>
+        {isBotl && <span style={{fontSize:9,color:'#f59e0b',background:'rgba(245,158,11,0.1)',padding:'2px 6px',borderRadius:4,fontWeight:700}}>⚠ HIGH</span>}
+      </div>
+
+      {recipes.length > 1 && (
+        <div style={{marginBottom:5}}>
+          <label style={S.label}>Alternate Recipe</label>
+          <select value={chosenId} onChange={e=>onSetRecipe(item,parseInt(e.target.value))} style={S.select}>
+            {recipes.map(r=><option key={r.id} value={r.id}>{recipeLabel(r)}</option>)}
+          </select>
+        </div>
+      )}
+
+      {tiers.length > 1 && (
+        <div style={{marginBottom:5}}>
+          <label style={S.label}>Building Tier</label>
+          <select value={tIdx} onChange={e=>onSetTier(item,parseInt(e.target.value))} style={S.select}>
+            {tiers.map((t,i)=><option key={i} value={i}>{t.name} — ×{t.speed} speed · {t.energy} kW</option>)}
+          </select>
+        </div>
+      )}
+
+      <div style={{display:'flex',gap:5,flexWrap:'wrap',marginTop:5}}>
+        {[
+          [nodeData.rate?.toFixed(2)+'/min','#3b82f6'],
+          [`×${Math.ceil(bcount)} bldgs`, isBotl?'#f59e0b':'#374151'],
+          [cap(recipe.buildingType),'#1f2937'],
+          [`${recipe.time}s/cycle`,'#1f2937'],
+          ...(tiers.length>1?[[tier.name,'#065f46']]:[]),
+        ].map(([lbl,col])=>(
+          <span key={lbl} style={{fontSize:9.5,color:col,background:col+'20',padding:'2px 7px',borderRadius:4,fontWeight:600}}>
+            {lbl}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function BreakdownRow({ item, nodeData, itemIconMap }) {
+  const bcount = nodeData.buildingCount ?? 0;
+  const isBotl = !nodeData.isRaw && bcount > 10;
+  return (
+    <div style={{
+      display:'flex',alignItems:'center',padding:'6px 0',
+      borderBottom:'1px solid #080d16',
+      borderLeft:`2px solid ${isBotl?'#b45309':nodeData.isRaw?'#15803d':'transparent'}`,
+      paddingLeft:6,
+    }}>
+      <ItemIcon name={item} iconMap={itemIconMap} size={20}/>
+      <div style={{flex:1,marginLeft:8,minWidth:0}}>
+        <div style={{color:'#e2e8f0',fontSize:12,fontWeight:600,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>
+          {cap(item)}
+        </div>
+        <div style={{color:'#1f2937',fontSize:10}}>
+          {nodeData.isRaw ? 'Raw resource' : cap(nodeData.tier?.name || nodeData.recipe?.buildingType || '')}
+        </div>
+      </div>
+      <div style={{textAlign:'right',flexShrink:0}}>
+        <div style={{color:'#60a5fa',fontSize:12,fontWeight:700}}>{nodeData.rate?.toFixed(2)}/min</div>
+        {!nodeData.isRaw && (
+          <div style={{color:isBotl?'#f59e0b':'#374151',fontSize:10}}>×{Math.ceil(bcount)}</div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function Sidebar({ allItems,itemRecipesMap,buildingTiers,itemIconMap,nodes,rawResources,
+  selectedItem,targetRate,recipeChoices,tierChoices,
+  onSelectItem,onSetRate,onSetRecipe,onSetTier,onSave,onLoad }) {
+
+  const chainNodes = Object.entries(nodes).filter(([,n])=>!n.isByProduct&&!n.isRaw);
+  const rawNodes   = Object.entries(nodes).filter(([,n])=>n.isRaw);
+  const fileRef    = useRef(null);
+
+  // Power consumption estimate
+  const totalPower = useMemo(()=>{
+    let w = 0;
+    for (const [,[n]] of Object.entries(nodes).filter(([,n])=>!n.isRaw&&!n.isByProduct&&n.tier)) {
+      // already a bug: destructuring fix below
+    }
+    let kw = 0;
+    for (const [item,n] of Object.entries(nodes)) {
+      if (n.isRaw||n.isByProduct||!n.tier) continue;
+      kw += Math.ceil(n.buildingCount??0) * n.tier.energy;
+    }
+    return kw;
+  },[nodes]);
+
+  return (
+    <div style={{
+      width:336,minWidth:336,background:'#080d16',display:'flex',flexDirection:'column',
+      height:'100%',overflow:'hidden',borderRight:'1px solid #111827',
+    }}>
+      {/* Header */}
+      <div style={{
+        padding:'13px 16px',borderBottom:'1px solid #111827',display:'flex',
+        alignItems:'center',justifyContent:'space-between',background:'#050810',flexShrink:0,
+      }}>
+        <div>
+          <div style={{fontSize:15,fontWeight:800,color:'#e2e8f0',letterSpacing:'-0.01em'}}>
+            ⚙ DSP Production Planner
+          </div>
+          <div style={{fontSize:10,color:'#1f2937',marginTop:1}}>Dyson Sphere Program</div>
+        </div>
+        <div style={{display:'flex',gap:5}}>
+          <button onClick={onSave} style={S.headerBtn} title="Download config">💾</button>
+          <button onClick={()=>fileRef.current?.click()} style={S.headerBtn} title="Load config">📂</button>
+          <input ref={fileRef} type="file" accept=".json" style={{display:'none'}}
+            onChange={e=>{
+              const f=e.target.files[0]; if(!f) return;
+              const r=new FileReader();
+              r.onload=ev=>onLoad(ev.target.result);
+              r.readAsText(f); e.target.value='';
+            }}/>
+        </div>
+      </div>
+
+      <div style={{overflowY:'auto',flex:1}}>
+
+        {/* Target */}
+        <Collapsible title="🎯 Target Item">
+          <ItemSearch allItems={allItems} selectedItem={selectedItem}
+            onSelect={onSelectItem} itemIconMap={itemIconMap}/>
+          <div style={{marginTop:9}}>
+            <label style={S.label}>Production Rate (items / min)</label>
+            <input type="number" min="0.01" step="1" value={targetRate}
+              onChange={e=>onSetRate(Math.max(0.01,parseFloat(e.target.value)||1))}
+              style={S.inputBase}/>
+          </div>
+          <div style={{display:'flex',gap:4,marginTop:8,flexWrap:'wrap'}}>
+            {[1,5,10,30,60,120,300,600].map(v=>(
+              <button key={v} onClick={()=>onSetRate(v)} style={{
+                padding:'3px 8px',borderRadius:6,cursor:'pointer',fontSize:11,fontWeight:700,
+                background:targetRate===v?'#0c2040':'#0d1117',
+                color:targetRate===v?'#60a5fa':'#374151',
+                border:`1px solid ${targetRate===v?'#1d4ed8':'#1f2937'}`,
+              }}>{v}</button>
+            ))}
+          </div>
+        </Collapsible>
+
+        {/* Summary stats */}
+        {selectedItem && Object.keys(nodes).length > 0 && (
+          <div style={{padding:'10px 14px',borderBottom:'1px solid #111827',display:'flex',gap:8}}>
+            {[
+              ['Items in chain', Object.keys(nodes).filter(k=>!nodes[k].isByProduct).length],
+              ['Raw resources', Object.keys(rawResources).length],
+              ['Est. power', totalPower>0 ? (totalPower>=1000?(totalPower/1000).toFixed(1)+'MW':totalPower+'kW') : '—'],
+            ].map(([lbl,val])=>(
+              <div key={lbl} style={{flex:1,background:'#0d1117',borderRadius:7,padding:'6px 8px',border:'1px solid #111827'}}>
+                <div style={{fontSize:16,fontWeight:800,color:'#e2e8f0'}}>{val}</div>
+                <div style={{fontSize:9,color:'#374151',marginTop:1}}>{lbl}</div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Recipe config */}
+        {selectedItem && chainNodes.length > 0 && (
+          <Collapsible title="⚙ Recipe &amp; Building Config">
+            {chainNodes
+              .sort((a,b)=>a[1].depth-b[1].depth)
+              .map(([item,n])=>(
+                <RecipeCard key={item} item={item} nodeData={n}
+                  recipes={itemRecipesMap[item]||[]}
+                  buildingTiers={buildingTiers}
+                  recipeChoices={recipeChoices} tierChoices={tierChoices}
+                  itemIconMap={itemIconMap}
+                  onSetRecipe={onSetRecipe} onSetTier={onSetTier}/>
+              ))}
+          </Collapsible>
+        )}
+
+        {/* Production breakdown */}
+        {selectedItem && Object.keys(nodes).length > 0 && (
+          <Collapsible title="📊 Full Production Breakdown">
+            {[...chainNodes,...rawNodes]
+              .sort((a,b)=>a[1].depth-b[1].depth)
+              .map(([item,n])=>(
+                <BreakdownRow key={item} item={item} nodeData={n} itemIconMap={itemIconMap}/>
+              ))}
+          </Collapsible>
+        )}
+
+        {/* Raw resources summary */}
+        {Object.keys(rawResources).length > 0 && (
+          <Collapsible title="🪨 Raw Resources / min">
+            {Object.entries(rawResources)
+              .sort((a,b)=>b[1]-a[1])
+              .map(([item,rate])=>(
+                <div key={item} style={{display:'flex',alignItems:'center',padding:'5px 0',borderBottom:'1px solid #080d16'}}>
+                  <ItemIcon name={item} iconMap={itemIconMap} size={20}/>
+                  <span style={{flex:1,marginLeft:8,color:'#e2e8f0',fontSize:12.5}}>{cap(item)}</span>
+                  <span style={{color:'#22c55e',fontWeight:800,fontSize:13,fontVariantNumeric:'tabular-nums'}}>
+                    {rate.toFixed(2)}
+                  </span>
+                </div>
+              ))}
+          </Collapsible>
+        )}
+
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   APP ROOT
+═══════════════════════════════════════════════════════════════ */
+function App() {
+  const [gameData,  setGameData]  = useState(null);
+  const [error,     setError]     = useState(null);
+  const [loading,   setLoading]   = useState(true);
+  const [selItem,   setSelItem]   = useState('');
+  const [rate,      setRate]      = useState(60);
+  const [recipeCh,  setRecipeCh]  = useState({});
+  const [tierCh,    setTierCh]    = useState({});
+
+  useEffect(()=>{
+    fetch('./DSP_data.json')
+      .then(r=>{ if(!r.ok) throw new Error(`HTTP ${r.status} — DSP_data.json not found in same folder`); return r.json(); })
+      .then(raw=>{ setGameData(normalizeData(raw)); setLoading(false); })
+      .catch(e=>{ setError(e.message); setLoading(false); });
+  },[]);
+
+  const allItems = useMemo(()=> gameData ? getAllProducibleItems(gameData.itemRecipesMap) : [], [gameData]);
+
+  const { nodes, edges, rawResources } = useMemo(()=>{
+    if (!gameData||!selItem) return {nodes:{},edges:[],rawResources:{}};
+    return computeProductionChain(selItem,rate,gameData.itemRecipesMap,gameData.buildingTiers,recipeCh,tierCh);
+  },[gameData,selItem,rate,recipeCh,tierCh]);
+
+  const handleSelect = useCallback(item=>{ setSelItem(item); setRecipeCh({}); setTierCh({}); },[]);
+  const handleRecipe = useCallback((item,id)=>setRecipeCh(p=>({...p,[item]:id})),[]);
+  const handleTier   = useCallback((item,idx)=>setTierCh(p=>({...p,[item]:idx})),[]);
+
+  const handleSave = useCallback(()=>{
+    const cfg = {selItem,rate,recipeCh,tierCh};
+    const url = URL.createObjectURL(new Blob([JSON.stringify(cfg,null,2)],{type:'application/json'}));
+    const a = document.createElement('a');
+    a.href=url; a.download=`dsp-plan-${selItem||'config'}.json`; a.click();
+    URL.revokeObjectURL(url);
+  },[selItem,rate,recipeCh,tierCh]);
+
+  const handleLoad = useCallback(str=>{
+    try {
+      const c = JSON.parse(str);
+      if(c.selItem)   setSelItem(c.selItem);
+      if(c.rate)      setRate(c.rate);
+      if(c.recipeCh)  setRecipeCh(c.recipeCh);
+      if(c.tierCh)    setTierCh(c.tierCh);
+    } catch { alert('Invalid config file.'); }
+  },[]);
+
+  if (loading) return (
+    <div style={S.centeredPage}>
+      <div style={{fontSize:56,marginBottom:14,animation:'spin 2s linear infinite'}}>⚙️</div>
+      <div style={{fontSize:18,color:'#6b7280'}}>Loading game data…</div>
+      <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
+    </div>
+  );
+
+  if (error) return (
+    <div style={S.centeredPage}>
+      <div style={{fontSize:48,marginBottom:12}}>❌</div>
+      <div style={{fontSize:16,color:'#f87171',marginBottom:8}}>Failed to load data</div>
+      <div style={{fontSize:13,color:'#4b5563',maxWidth:440,textAlign:'center',lineHeight:1.6}}>{error}</div>
+      <div style={{fontSize:12,color:'#374151',marginTop:14}}>
+        Make sure <code style={{color:'#60a5fa',background:'#111827',padding:'2px 6px',borderRadius:4}}>
+          DSP_data.json</code> is in the same directory as this HTML file.
+      </div>
+    </div>
+  );
+
+  return (
+    <div style={{width:'100vw',height:'100vh',display:'flex',overflow:'hidden',
+      fontFamily:'system-ui,-apple-system,sans-serif'}}>
+      <Sidebar
+        allItems={allItems} itemRecipesMap={gameData.itemRecipesMap}
+        buildingTiers={gameData.buildingTiers} itemIconMap={gameData.itemIconMap}
+        nodes={nodes} rawResources={rawResources}
+        selectedItem={selItem} targetRate={rate}
+        recipeChoices={recipeCh} tierChoices={tierCh}
+        onSelectItem={handleSelect} onSetRate={setRate}
+        onSetRecipe={handleRecipe} onSetTier={handleTier}
+        onSave={handleSave} onLoad={handleLoad}
+      />
+      <div style={{flex:1,position:'relative',overflow:'hidden'}}>
+        {!selItem ? (
+          <div style={S.centeredPage}>
+            <div style={{fontSize:72,marginBottom:20}}>🏭</div>
+            <div style={{fontSize:22,fontWeight:800,color:'#e2e8f0',marginBottom:10}}>
+              DSP Production Planner
+            </div>
+            <div style={{fontSize:14,color:'#374151',maxWidth:380,textAlign:'center',lineHeight:1.7}}>
+              Select a target item from the left panel and set your desired production rate
+              to generate the full factory chain with building counts and resource requirements.
+            </div>
+            <div style={{display:'flex',gap:20,marginTop:28}}>
+              {[['🔍','Search items','Use the left panel'],['📊','Visual graph','Drag, pan & zoom'],['⚙','Config builds','Choose tiers & recipes']].map(([icon,title,sub])=>(
+                <div key={title} style={{textAlign:'center',background:'#080d16',border:'1px solid #111827',borderRadius:12,padding:'16px 20px',width:130}}>
+                  <div style={{fontSize:28,marginBottom:6}}>{icon}</div>
+                  <div style={{fontSize:12,fontWeight:700,color:'#9ca3af'}}>{title}</div>
+                  <div style={{fontSize:10,color:'#374151',marginTop:3}}>{sub}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : Object.keys(nodes).length===0 ? (
+          <div style={S.centeredPage}>
+            <div style={{fontSize:14,color:'#374151'}}>No production chain found for "{cap(selItem)}".</div>
+          </div>
+        ) : (
+          <ProductionGraph
+            nodes={nodes} edges={edges}
+            itemIconMap={gameData.itemIconMap}
+            selectedItem={selItem}
+            onNodeClick={handleSelect}
+          />
+        )}
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
