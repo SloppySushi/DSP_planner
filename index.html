@@ -153,8 +153,8 @@ function computeProductionChain(targetItem, targetRate, itemRecipesMap, building
       nodes[item] = { rate: neededRate, buildingCount, recipe, tier, tierIdx, allTiers, depth, isRaw:false };
     }
 
-    // cycles per minute this item needs
-    const cyclesPerMin = neededRate / (outEntry.qty * tier.speed * (60 / recipe.time));
+    // Total cycles/min across all buildings = neededRate / outEntry.qty
+    const cyclesPerMin = neededRate / outEntry.qty;
 
     resolving.add(item);
     for (const ing of recipe.ingredients) {
@@ -711,14 +711,10 @@ function Sidebar({ allItems,itemRecipesMap,buildingTiers,itemIconMap,nodes,rawRe
 
   // Power consumption estimate
   const totalPower = useMemo(()=>{
-    let w = 0;
-    for (const [,[n]] of Object.entries(nodes).filter(([,n])=>!n.isRaw&&!n.isByProduct&&n.tier)) {
-      // already a bug: destructuring fix below
-    }
     let kw = 0;
-    for (const [item,n] of Object.entries(nodes)) {
-      if (n.isRaw||n.isByProduct||!n.tier) continue;
-      kw += Math.ceil(n.buildingCount??0) * n.tier.energy;
+    for (const [, n] of Object.entries(nodes)) {
+      if (n.isRaw || n.isByProduct || !n.tier) continue;
+      kw += Math.ceil(n.buildingCount ?? 0) * (n.tier.energy ?? 0);
     }
     return kw;
   },[nodes]);
